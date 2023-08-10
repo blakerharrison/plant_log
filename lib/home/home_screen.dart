@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plant_log/api/perenual/species_entity.dart';
+import 'package:plant_log/api/perenual/models/species_entity.dart';
 import 'package:plant_log/home/home_provider.dart';
 
 class Home extends ConsumerWidget {

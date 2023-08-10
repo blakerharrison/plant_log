@@ -4,7 +4,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'species_entity.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class SpeciesEntity extends Equatable {
+class
+SpeciesEntity extends Equatable {
   @JsonKey(name: 'data')
   final List<SpeciesDataEntity> data;
 
