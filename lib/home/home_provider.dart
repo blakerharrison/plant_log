@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +29,17 @@ class SpeciesViewModel extends StateNotifier<SpeciesEntity> {
         data: [...state.data, ...speciesEntity.data],
       );
       page++;
+    }
+    isLoading = false;
+  }
+
+  void fetchSpeciesDetails(int id) async {
+    if (isLoading) return;
+    isLoading = true;
+    final speciesDetailsEntity =
+        await perenualAPI.speciesDetails(id);
+    if (speciesDetailsEntity.id != null) {
+      log('🌵 Plant Details $speciesDetailsEntity');
     }
     isLoading = false;
   }
