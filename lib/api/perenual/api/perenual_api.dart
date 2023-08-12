@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:plant_log/api/logger/logger.dart';
 import 'package:plant_log/api/perenual/models/plant_details_entity.dart';
 import 'package:plant_log/api/perenual/models/species_entity.dart';
 
@@ -28,6 +29,9 @@ class PerenualAPI {
       final decodedJson = jsonDecode(response.body);
       return SpeciesEntity.fromJson(decodedJson);
     } else {
+      Logger.error(
+        'Response code for speciesList is not 200, actual code is ${response.statusCode}',
+      );
       return const SpeciesEntity();
     }
   }
@@ -41,6 +45,9 @@ class PerenualAPI {
       final decodedJson = jsonDecode(response.body);
       return SpeciesDetailsEntity.fromJson(decodedJson);
     } else {
+      Logger.error(
+        'Response code for speciesDetails is not 200, actual code is ${response.statusCode}',
+      );
       return const SpeciesDetailsEntity();
     }
   }
