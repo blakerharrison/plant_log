@@ -33,7 +33,7 @@ class PerenualAPI {
   }
 
   Future<SpeciesDetailsEntity> speciesDetails(int id) async {
-    Uri uri = Uri.https(_authority, '$_speciesDetailsPath$_apiDirectory/$id', {
+    Uri uri = Uri.https(_authority, '$_apiDirectory$_speciesDetailsPath/$id', {
       'key': _apiKey,
     });
     http.Response response = await http.get(uri);
