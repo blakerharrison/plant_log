@@ -21,7 +21,7 @@ class SpeciesDetailsEntity extends Equatable {
   final String family;
 
   @JsonKey(name: 'origin')
-  final String origin;
+  final List<String> origin;
 
   @JsonKey(name: 'type')
   final String type;
@@ -36,10 +36,10 @@ class SpeciesDetailsEntity extends Equatable {
   final String watering;
 
   @JsonKey(name: 'depth_water_requirement')
-  final DepthWaterRequirement depthWaterRequirement;
+  final List<DepthWaterRequirement> depthWaterRequirement;
 
   @JsonKey(name: 'volume_water_requirement')
-  final VolumeWaterRequirement volumeWaterRequirement;
+  final List<VolumeWaterRequirement> volumeWaterRequirement;
 
   @JsonKey(name: 'watering_period')
   final String wateringPeriod;
@@ -48,7 +48,7 @@ class SpeciesDetailsEntity extends Equatable {
   final WateringGeneralBenchmark wateringGeneralBenchmark;
 
   @JsonKey(name: 'plant_anatomy')
-  final Map<String, String> plantAnatomy;
+  final List<Map<String, dynamic>> plantAnatomy;
 
   @JsonKey(name: 'sunlight')
   final List<String> sunlight;
@@ -81,7 +81,7 @@ class SpeciesDetailsEntity extends Equatable {
   final List<String> soil;
 
   @JsonKey(name: 'pest_susceptibility')
-  final String pestSusceptibility;
+  final List<String> pestSusceptibility;
 
   @JsonKey(name: 'cones')
   final bool? cones;
@@ -93,7 +93,7 @@ class SpeciesDetailsEntity extends Equatable {
   final bool? edibleFruit;
 
   @JsonKey(name: 'fruit_color')
-  final String fruitColor;
+  final List<String> fruitColor;
 
   @JsonKey(name: 'fruiting_season')
   final String fruitingSeason;
@@ -123,10 +123,10 @@ class SpeciesDetailsEntity extends Equatable {
   final bool? medicinal;
 
   @JsonKey(name: 'poisonous_to_humans')
-  final bool? poisonousToHumans;
+  final int? poisonousToHumans;
 
   @JsonKey(name: 'poisonous_to_pets')
-  final bool? poisonousToPets;
+  final int? poisonousToPets;
 
   @JsonKey(name: 'drought_tolerant')
   final bool? droughtTolerant;
@@ -170,16 +170,16 @@ class SpeciesDetailsEntity extends Equatable {
     this.scientificName = const [],
     this.otherName = const [],
     this.family = '',
-    this.origin = '',
+    this.origin = const [],
     this.type = '',
     this.dimensions = const Dimensions(),
     this.cycle = '',
     this.watering = '',
-    this.depthWaterRequirement = const DepthWaterRequirement(),
-    this.volumeWaterRequirement = const VolumeWaterRequirement(),
+    this.depthWaterRequirement = const [],
+    this.volumeWaterRequirement = const [],
     this.wateringPeriod = '',
     this.wateringGeneralBenchmark = const WateringGeneralBenchmark(),
-    this.plantAnatomy = const {},
+    this.plantAnatomy = const [],
     this.sunlight = const [],
     this.pruningMonth = const [],
     this.attracts = const [],
@@ -190,11 +190,11 @@ class SpeciesDetailsEntity extends Equatable {
     this.floweringSeason = '',
     this.color = '',
     this.soil = const [],
-    this.pestSusceptibility = '',
+    this.pestSusceptibility = const [],
     this.cones,
     this.fruits,
     this.edibleFruit,
-    this.fruitColor = '',
+    this.fruitColor = const [],
     this.fruitingSeason = '',
     this.harvestSeason = '',
     this.harvestMethod = '',

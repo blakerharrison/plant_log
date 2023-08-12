@@ -20,30 +20,36 @@ SpeciesDetailsEntity _$SpeciesDetailsEntityFromJson(
               .toList() ??
           const [],
       family: json['family'] as String? ?? '',
-      origin: json['origin'] as String? ?? '',
+      origin: (json['origin'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       type: json['type'] as String? ?? '',
       dimensions: json['dimensions'] == null
           ? const Dimensions()
           : Dimensions.fromJson(json['dimensions'] as Map<String, dynamic>),
       cycle: json['cycle'] as String? ?? '',
       watering: json['watering'] as String? ?? '',
-      depthWaterRequirement: json['depth_water_requirement'] == null
-          ? const DepthWaterRequirement()
-          : DepthWaterRequirement.fromJson(
-              json['depth_water_requirement'] as Map<String, dynamic>),
-      volumeWaterRequirement: json['volume_water_requirement'] == null
-          ? const VolumeWaterRequirement()
-          : VolumeWaterRequirement.fromJson(
-              json['volume_water_requirement'] as Map<String, dynamic>),
+      depthWaterRequirement: (json['depth_water_requirement'] as List<dynamic>?)
+              ?.map((e) =>
+                  DepthWaterRequirement.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      volumeWaterRequirement: (json['volume_water_requirement']
+                  as List<dynamic>?)
+              ?.map((e) =>
+                  VolumeWaterRequirement.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       wateringPeriod: json['watering_period'] as String? ?? '',
       wateringGeneralBenchmark: json['watering_general_benchmark'] == null
           ? const WateringGeneralBenchmark()
           : WateringGeneralBenchmark.fromJson(
               json['watering_general_benchmark'] as Map<String, dynamic>),
-      plantAnatomy: (json['plant_anatomy'] as Map<String, dynamic>?)?.map(
-            (k, e) => MapEntry(k, e as String),
-          ) ??
-          const {},
+      plantAnatomy: (json['plant_anatomy'] as List<dynamic>?)
+              ?.map((e) => e as Map<String, dynamic>)
+              .toList() ??
+          const [],
       sunlight: (json['sunlight'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -73,11 +79,17 @@ SpeciesDetailsEntity _$SpeciesDetailsEntityFromJson(
       soil:
           (json['soil'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const [],
-      pestSusceptibility: json['pest_susceptibility'] as String? ?? '',
+      pestSusceptibility: (json['pest_susceptibility'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       cones: json['cones'] as bool?,
       fruits: json['fruits'] as bool?,
       edibleFruit: json['edible_fruit'] as bool?,
-      fruitColor: json['fruit_color'] as String? ?? '',
+      fruitColor: (json['fruit_color'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       fruitingSeason: json['fruiting_season'] as String? ?? '',
       harvestSeason: json['harvest_season'] as String? ?? '',
       harvestMethod: json['harvest_method'] as String? ?? '',
@@ -90,8 +102,8 @@ SpeciesDetailsEntity _$SpeciesDetailsEntityFromJson(
       growthRate: json['growth_rate'] as String? ?? '',
       maintenance: json['maintenance'] as String? ?? '',
       medicinal: json['medicinal'] as bool?,
-      poisonousToHumans: json['poisonous_to_humans'] as bool?,
-      poisonousToPets: json['poisonous_to_pets'] as bool?,
+      poisonousToHumans: json['poisonous_to_humans'] as int?,
+      poisonousToPets: json['poisonous_to_pets'] as int?,
       droughtTolerant: json['drought_tolerant'] as bool?,
       saltTolerant: json['salt_tolerant'] as bool?,
       thorny: json['thorny'] as bool?,
@@ -122,8 +134,10 @@ Map<String, dynamic> _$SpeciesDetailsEntityToJson(
       'dimensions': instance.dimensions.toJson(),
       'cycle': instance.cycle,
       'watering': instance.watering,
-      'depth_water_requirement': instance.depthWaterRequirement.toJson(),
-      'volume_water_requirement': instance.volumeWaterRequirement.toJson(),
+      'depth_water_requirement':
+          instance.depthWaterRequirement.map((e) => e.toJson()).toList(),
+      'volume_water_requirement':
+          instance.volumeWaterRequirement.map((e) => e.toJson()).toList(),
       'watering_period': instance.wateringPeriod,
       'watering_general_benchmark': instance.wateringGeneralBenchmark.toJson(),
       'plant_anatomy': instance.plantAnatomy,
