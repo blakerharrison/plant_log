@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/api/perenual/models/species_entity.dart';
-import 'package:plant_log/home/home_provider.dart';
+import 'package:plant_log/home/state/home_state.dart';
+import 'package:plant_log/home/ui/home_presenter.dart';
+import 'package:plant_log/species_details/state/species_details_provider.dart';
 
 class Home extends ConsumerWidget {
-  Home({super.key});
-
+  final HomePresenter presenter;
   final ScrollController _scrollController = ScrollController();
+
+  Home({
+    super.key,
+    HomePresenter? homePresenter,
+  }) : presenter = homePresenter ?? HomePresenter();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    SpeciesEntity speciesEntity = ref.watch(speciesViewModelProvider);
+    SpeciesEntity speciesEntity = ref.watch(homeViewModelProvider);
     _scrollController.addListener(() {
       if (_scrollController.position.pixels +
               MediaQuery.of(context).size.height >=
           _scrollController.position.maxScrollExtent) {
-        ref.read(speciesViewModelProvider.notifier).fetchMoreSpeciesData();
+        ref.read(homeViewModelProvider.notifier).fetchMoreSpeciesData();
       }
     });
     return Scaffold(
@@ -38,15 +44,16 @@ class Home extends ConsumerWidget {
               speciesEntity.data.length,
               (index) => GestureDetector(
                 onTap: () {
-                  ref
-                      .read(speciesViewModelProvider.notifier)
-                      .fetchSpeciesDetails(speciesEntity.data[index].id);
+                  presenter.navigateToSpeciesDetails(
+                    context,
+                    id: speciesEntity.data[index].id,
+                  );
                 },
                 child: Stack(
                   children: [
                     Center(
                       child: Image.network(
-                        speciesEntity.data[index].defaultImage.originalUrl,
+                        speciesEntity.data[index].defaultImage.smallUrl,
                         fit: BoxFit.cover,
                         height: MediaQuery.of(context).size.height / 4,
                         width: MediaQuery.of(context).size.width,

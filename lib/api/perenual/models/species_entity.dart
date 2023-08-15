@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:plant_log/architecture/types/entity.dart';
 
 part 'species_entity.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class
-SpeciesEntity extends Equatable {
+SpeciesEntity implements Entity {
   @JsonKey(name: 'data')
   final List<SpeciesDataEntity> data;
 
@@ -16,10 +17,14 @@ SpeciesEntity extends Equatable {
   factory SpeciesEntity.fromJson(Map<String, dynamic> json) =>
       _$SpeciesEntityFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$SpeciesEntityToJson(this);
 
   @override
   List<Object?> get props => [data];
+
+  @override
+  bool? get stringify => true;
 }
 
 @JsonSerializable(explicitToJson: true)

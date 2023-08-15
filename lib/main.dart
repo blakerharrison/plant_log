@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plant_log/home/home_screen.dart';
+import 'package:plant_log/home/ui/home_screen.dart';
 
 void main() {
   runApp(const PlantLogApp());
