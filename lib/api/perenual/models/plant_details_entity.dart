@@ -36,7 +36,7 @@ class SpeciesDetailsEntity extends Equatable {
   final String watering;
 
   @JsonKey(name: 'depth_water_requirement')
-  final List<DepthWaterRequirement> depthWaterRequirement;
+  final dynamic depthWaterRequirement;
 
   @JsonKey(name: 'volume_water_requirement')
   final dynamic volumeWaterRequirement;
@@ -318,7 +318,7 @@ class Dimensions extends Equatable {
       ];
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class DepthWaterRequirement extends Equatable {
   @JsonKey(name: 'unit')
   final String unit;

@@ -35,7 +35,7 @@ class SpeciesDetailsView extends HookConsumerWidget {
       ),
       body: ref.watch(speciesDetailsEntityProvider(id)).when(
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, stack) => const Text('Error'),
+            error: (err, stack) => Text('$err'),
             data: (speciesDetails) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +43,7 @@ class SpeciesDetailsView extends HookConsumerWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Image.network(
-                  speciesDetails.defaultImage.smallUrl,
+                  speciesDetails.defaultImage.regularUrl,
                   fit: BoxFit.cover,
                 ),
               ),

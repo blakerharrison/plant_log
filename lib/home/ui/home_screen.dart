@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/api/perenual/models/species_entity.dart';
 import 'package:plant_log/home/state/home_state.dart';
 import 'package:plant_log/home/ui/home_presenter.dart';
-import 'package:plant_log/species_details/state/species_details_provider.dart';
 
 class Home extends ConsumerWidget {
   final HomePresenter presenter;
@@ -53,7 +52,7 @@ class Home extends ConsumerWidget {
                   children: [
                     Center(
                       child: Image.network(
-                        speciesEntity.data[index].defaultImage.smallUrl,
+                        speciesEntity.data[index].defaultImage.regularUrl,
                         fit: BoxFit.cover,
                         height: MediaQuery.of(context).size.height / 4,
                         width: MediaQuery.of(context).size.width,
