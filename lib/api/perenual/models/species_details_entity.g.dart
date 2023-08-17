@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'plant_details_entity.dart';
+part of 'species_details_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

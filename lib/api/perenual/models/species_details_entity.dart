@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'plant_details_entity.g.dart';
+part 'species_details_entity.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class SpeciesDetailsEntity extends Equatable {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plant_log/species_details/ui/species_details_screen.dart';
+import 'package:plant_log/species_details/ui/species_details_view.dart';
 
 class HomePresenter {
   void navigateToSpeciesDetails(BuildContext context, {required int id}) {
