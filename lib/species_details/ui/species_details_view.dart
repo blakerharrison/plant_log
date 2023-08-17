@@ -54,74 +54,34 @@ class SpeciesDetailsView extends HookConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Common Name'),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24.0, vertical: 5),
-                            child: Text(speciesDetails.commonName),
+                          TitleWithDetailsView(
+                            title: 'Common Name',
+                            details: speciesDetails.commonName,
                           ),
-                          const Text('Scientific Name'),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24.0, vertical: 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(
-                                speciesDetails.scientificName.length,
-                                (index) => Text(
-                                  speciesDetails.scientificName[index],
-                                ),
-                              ),
-                            ),
+                          TitleWithListView(
+                            title: 'Scientific Name',
+                            list: speciesDetails.scientificName,
                           ),
-                          const Text('Other Name'),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24.0,
-                              vertical: 5,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(
-                                speciesDetails.otherName.length,
-                                (index) => Text(
-                                  speciesDetails.otherName[index],
-                                ),
-                              ),
-                            ),
+                          TitleWithListView(
+                            title: 'Other Name',
+                            list: speciesDetails.otherName,
                           ),
-                          const Text('Family'),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24.0,
-                              vertical: 5,
-                            ),
-                            child: Text(speciesDetails.family),
+                          TitleWithDetailsView(
+                            title: 'Family',
+                            details: speciesDetails.family,
                           ),
-                          const Text('Origin'),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24.0,
-                              vertical: 5,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(
-                                speciesDetails.origin.length,
-                                (index) => Text(
-                                  speciesDetails.origin[index],
-                                ),
-                              ),
-                            ),
+                          TitleWithListView(
+                            title: 'Origin',
+                            list: speciesDetails.origin,
                           ),
-                          const Text('Type'),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24.0,
-                              vertical: 5,
-                            ),
-                            child: Text(speciesDetails.type),
+                          TitleWithDetailsView(
+                            title: 'Type',
+                            details: speciesDetails.type,
                           ),
+                          TitleWithDimensionsView(
+                            title: 'Dimensions',
+                            dimensions: speciesDetails.dimensions,
+                          )
                         ],
                       ),
                     ),
@@ -130,6 +90,118 @@ class SpeciesDetailsView extends HookConsumerWidget {
               );
             },
           ),
+    );
+  }
+}
+
+class TitleWithDetailsView extends StatelessWidget {
+  final String _title;
+  final String _details;
+
+  const TitleWithDetailsView({
+    required String title,
+    required String details,
+    super.key,
+  })  : _title = title,
+        _details = details;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(_title),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 5,
+          ),
+          child: Text(_details),
+        ),
+      ],
+    );
+  }
+}
+
+class TitleWithListView extends StatelessWidget {
+  final String _title;
+  final List<String> _list;
+
+  const TitleWithListView({
+    required String title,
+    required List<String> list,
+    super.key,
+  })  : _title = title,
+        _list = list;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(_title),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              _list.length,
+              (index) => Text(_list[index]),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+// Optimize
+//
+class TitleWithDimensionsView extends StatelessWidget {
+  final String _title;
+  final Dimensions _dimensions;
+
+  const TitleWithDimensionsView({
+    required String title,
+    required Dimensions dimensions,
+    super.key,
+  })  : _title = title,
+        _dimensions = dimensions;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(_title),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 5,
+          ),
+          child: Column(
+            children: [
+              TitleWithDetailsView(
+                title: 'Type',
+                details: _dimensions.type,
+              ),
+              TitleWithDetailsView(
+                title: 'Min',
+                details: _dimensions.minValue.toString(),
+              ),
+              TitleWithDetailsView(
+                title: 'Max',
+                details: _dimensions.maxValue.toString(),
+              ),
+              TitleWithDetailsView(
+                title: 'Unit',
+                details: _dimensions.unit,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
