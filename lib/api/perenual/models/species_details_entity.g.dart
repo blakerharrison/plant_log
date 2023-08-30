@@ -58,11 +58,11 @@ SpeciesDetailsEntity _$SpeciesDetailsEntityFromJson(
               .toList() ??
           const [],
       hardiness: json['hardiness'] == null
-          ? const Hardness()
-          : Hardness.fromJson(json['hardiness'] as Map<String, dynamic>),
+          ? const Hardiness()
+          : Hardiness.fromJson(json['hardiness'] as Map<String, dynamic>),
       hardinessLocation: json['hardiness_location'] == null
-          ? const HardnessLocation()
-          : HardnessLocation.fromJson(
+          ? const HardinessLocation()
+          : HardinessLocation.fromJson(
               json['hardiness_location'] as Map<String, dynamic>),
       flowers: json['flowers'] as bool?,
       floweringSeason: json['flowering_season'] as String? ?? '',
@@ -110,6 +110,7 @@ SpeciesDetailsEntity _$SpeciesDetailsEntityFromJson(
           ? const DefaultImage()
           : DefaultImage.fromJson(
               json['default_image'] as Map<String, dynamic>),
+      careGuideUri: json['care-guides'] as String? ?? '',
     );
 
 Map<String, dynamic> _$SpeciesDetailsEntityToJson(
@@ -168,6 +169,7 @@ Map<String, dynamic> _$SpeciesDetailsEntityToJson(
       'care_level': instance.careLevel,
       'description': instance.description,
       'default_image': instance.defaultImage.toJson(),
+      'care-guides': instance.careGuideUri,
     };
 
 Dimensions _$DimensionsFromJson(Map<String, dynamic> json) => Dimensions(
@@ -238,23 +240,23 @@ Map<String, dynamic> _$PruningCountToJson(PruningCount instance) =>
       'interval': instance.interval,
     };
 
-Hardness _$HardnessFromJson(Map<String, dynamic> json) => Hardness(
+Hardiness _$HardinessFromJson(Map<String, dynamic> json) => Hardiness(
       min: json['min'] as String? ?? '',
       max: json['max'] as String? ?? '',
     );
 
-Map<String, dynamic> _$HardnessToJson(Hardness instance) => <String, dynamic>{
+Map<String, dynamic> _$HardinessToJson(Hardiness instance) => <String, dynamic>{
       'min': instance.min,
       'max': instance.max,
     };
 
-HardnessLocation _$HardnessLocationFromJson(Map<String, dynamic> json) =>
-    HardnessLocation(
+HardinessLocation _$HardinessLocationFromJson(Map<String, dynamic> json) =>
+    HardinessLocation(
       fullUrl: json['full_url'] as String? ?? '',
       fullIFrame: json['full_iframe'] as String? ?? '',
     );
 
-Map<String, dynamic> _$HardnessLocationToJson(HardnessLocation instance) =>
+Map<String, dynamic> _$HardinessLocationToJson(HardinessLocation instance) =>
     <String, dynamic>{
       'full_url': instance.fullUrl,
       'full_iframe': instance.fullIFrame,

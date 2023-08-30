@@ -63,10 +63,10 @@ class SpeciesDetailsEntity extends Equatable {
   final List<String> propagation;
 
   @JsonKey(name: 'hardiness')
-  final Hardness hardiness;
+  final Hardiness hardiness;
 
   @JsonKey(name: 'hardiness_location')
-  final HardnessLocation hardinessLocation;
+  final HardinessLocation hardinessLocation;
 
   @JsonKey(name: 'flowers')
   final bool? flowers;
@@ -164,6 +164,9 @@ class SpeciesDetailsEntity extends Equatable {
   @JsonKey(name: 'default_image')
   final DefaultImage defaultImage;
 
+  @JsonKey(name: 'care-guides')
+  final String careGuideUri;
+
   const SpeciesDetailsEntity({
     this.id,
     this.commonName = '',
@@ -184,8 +187,8 @@ class SpeciesDetailsEntity extends Equatable {
     this.pruningMonth = const [],
     this.attracts = const [],
     this.propagation = const [],
-    this.hardiness = const Hardness(),
-    this.hardinessLocation = const HardnessLocation(),
+    this.hardiness = const Hardiness(),
+    this.hardinessLocation = const HardinessLocation(),
     this.flowers,
     this.floweringSeason = '',
     this.color = '',
@@ -218,6 +221,7 @@ class SpeciesDetailsEntity extends Equatable {
     this.careLevel = '',
     this.description = '',
     this.defaultImage = const DefaultImage(),
+    this.careGuideUri = '',
   });
 
   factory SpeciesDetailsEntity.fromJson(Map<String, dynamic> json) =>
@@ -280,6 +284,7 @@ class SpeciesDetailsEntity extends Equatable {
         careLevel,
         description,
         defaultImage,
+        careGuideUri,
       ];
 }
 
@@ -419,22 +424,22 @@ class PruningCount extends Equatable {
 }
 
 @JsonSerializable()
-class Hardness extends Equatable {
+class Hardiness extends Equatable {
   @JsonKey(name: 'min')
   final String min;
 
   @JsonKey(name: 'max')
   final String max;
 
-  const Hardness({
+  const Hardiness({
     this.min = '',
     this.max = '',
   });
 
-  factory Hardness.fromJson(Map<String, dynamic> json) =>
-      _$HardnessFromJson(json);
+  factory Hardiness.fromJson(Map<String, dynamic> json) =>
+      _$HardinessFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HardnessToJson(this);
+  Map<String, dynamic> toJson() => _$HardinessToJson(this);
 
   @override
   List<Object?> get props => [
@@ -444,22 +449,22 @@ class Hardness extends Equatable {
 }
 
 @JsonSerializable()
-class HardnessLocation extends Equatable {
+class HardinessLocation extends Equatable {
   @JsonKey(name: 'full_url')
   final String fullUrl;
 
   @JsonKey(name: 'full_iframe')
   final String fullIFrame;
 
-  const HardnessLocation({
+  const HardinessLocation({
     this.fullUrl = '',
     this.fullIFrame = '',
   });
 
-  factory HardnessLocation.fromJson(Map<String, dynamic> json) =>
-      _$HardnessLocationFromJson(json);
+  factory HardinessLocation.fromJson(Map<String, dynamic> json) =>
+      _$HardinessLocationFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HardnessLocationToJson(this);
+  Map<String, dynamic> toJson() => _$HardinessLocationToJson(this);
 
   @override
   List<Object?> get props => [

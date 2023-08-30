@@ -17,6 +17,7 @@ dependencies:
   flutter_riverpod: ^2.3.6
   http: ^1.1.0
   hooks_riverpod: ^2.3.7
+  webview_flutter: ^4.2.3
 #  shared_preferences: ^2.2.0
 
 dev_dependencies:

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:plant_log/api/logger/logger.dart';
 import 'package:plant_log/api/perenual/api/perenual_api.dart';
@@ -67,6 +66,10 @@ class SpeciesDetailsView extends HookConsumerWidget {
                             list: speciesDetails.otherName,
                           ),
                           TitleWithDetailsView(
+                            title: 'Description',
+                            details: speciesDetails.description,
+                          ),
+                          TitleWithDetailsView(
                             title: 'Family',
                             details: speciesDetails.family,
                           ),
@@ -81,7 +84,116 @@ class SpeciesDetailsView extends HookConsumerWidget {
                           TitleWithDimensionsView(
                             title: 'Dimensions',
                             dimensions: speciesDetails.dimensions,
-                          )
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Cycle',
+                            details: speciesDetails.cycle,
+                          ),
+                          TitleWithListView(
+                            title: 'Attracts',
+                            list: speciesDetails.attracts,
+                          ),
+                          TitleWithListView(
+                            title: 'Propagation',
+                            list: speciesDetails.propagation,
+                          ),
+                          HardinessView(
+                            title: 'Hardiness',
+                            hardiness: speciesDetails.hardiness,
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Watering',
+                            details: speciesDetails.watering,
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Watering Period',
+                            details: speciesDetails.wateringPeriod,
+                          ),
+                          WateringGeneralBenchmarkView(
+                            title: 'Watering General Benchmark',
+                            wateringGeneralBenchmark:
+                                speciesDetails.wateringGeneralBenchmark,
+                          ),
+                          TitleWithListView(
+                            title: 'Sunlight',
+                            list: speciesDetails.sunlight,
+                          ),
+                          TitleWithListView(
+                            title: 'Pruning Month',
+                            list: speciesDetails.pruningMonth,
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Care Guide URI',
+                            details: speciesDetails.careGuideUri,
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Growth Rate',
+                            details: speciesDetails.growthRate,
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Drought Tolerant',
+                            details: speciesDetails.droughtTolerant.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Salt Tolerant',
+                            details: speciesDetails.saltTolerant.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Thorny',
+                            details: speciesDetails.thorny.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Invasive',
+                            details: speciesDetails.invasive.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Tropical',
+                            details: speciesDetails.tropical.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Indoor',
+                            details: speciesDetails.indoor.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Care Level',
+                            details: speciesDetails.careLevel,
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Flowers',
+                            details: speciesDetails.flowers.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Cones',
+                            details: speciesDetails.cones.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Fruits',
+                            details: speciesDetails.fruits.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Edible Fruit',
+                            details: speciesDetails.edibleFruit.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Leaf',
+                            details: speciesDetails.leaf.toString(),
+                          ),
+                          TitleWithListView(
+                            title: 'Leaf Color',
+                            list: speciesDetails.leafColor,
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Edible Leaf',
+                            details: speciesDetails.edibleLeaf.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Cuisine',
+                            details: speciesDetails.cuisine.toString(),
+                          ),
+                          TitleWithDetailsView(
+                            title: 'Medicinal',
+                            details: speciesDetails.medicinal.toString(),
+                          ),
                         ],
                       ),
                     ),
@@ -155,7 +267,6 @@ class TitleWithListView extends StatelessWidget {
   }
 }
 
-
 // Optimize
 //
 class TitleWithDimensionsView extends StatelessWidget {
@@ -197,6 +308,86 @@ class TitleWithDimensionsView extends StatelessWidget {
               TitleWithDetailsView(
                 title: 'Unit',
                 details: _dimensions.unit,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class HardinessView extends StatelessWidget {
+  final String _title;
+  final Hardiness _hardiness;
+
+  const HardinessView({
+    required String title,
+    required Hardiness hardiness,
+    super.key,
+  })  : _title = title,
+        _hardiness = hardiness;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(_title),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 5,
+          ),
+          child: Column(
+            children: [
+              TitleWithDetailsView(
+                title: 'Min',
+                details: _hardiness.min.toString(),
+              ),
+              TitleWithDetailsView(
+                title: 'Max',
+                details: _hardiness.max.toString(),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class WateringGeneralBenchmarkView extends StatelessWidget {
+  final String _title;
+  final WateringGeneralBenchmark _wateringGeneralBenchmark;
+
+  const WateringGeneralBenchmarkView({
+    required String title,
+    required WateringGeneralBenchmark wateringGeneralBenchmark,
+    super.key,
+  })  : _title = title,
+        _wateringGeneralBenchmark = wateringGeneralBenchmark;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(_title),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 5,
+          ),
+          child: Column(
+            children: [
+              TitleWithDetailsView(
+                title: 'Value',
+                details: _wateringGeneralBenchmark.value.toString(),
+              ),
+              TitleWithDetailsView(
+                title: 'Unit',
+                details: _wateringGeneralBenchmark.unit.toString(),
               ),
             ],
           ),
