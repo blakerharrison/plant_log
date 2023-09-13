@@ -23,7 +23,10 @@ class SpeciesDetailsView extends HookConsumerWidget {
     final id = ref.watch(selectedSpeciesId);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .inversePrimary,
         title: const Text(
           'Plant Details 3:<',
           style: TextStyle(
@@ -33,177 +36,195 @@ class SpeciesDetailsView extends HookConsumerWidget {
         ),
       ),
       body: ref.watch(speciesDetailsEntityProvider(id)).when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, stack) => Text('$err'),
-            data: (speciesDetails) {
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      child: Image.network(
-                        speciesDetails.defaultImage.regularUrl,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TitleWithDetailsView(
-                            title: 'Common Name',
-                            details: speciesDetails.commonName,
-                          ),
-                          TitleWithListView(
-                            title: 'Scientific Name',
-                            list: speciesDetails.scientificName,
-                          ),
-                          TitleWithListView(
-                            title: 'Other Name',
-                            list: speciesDetails.otherName,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Description',
-                            details: speciesDetails.description,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Family',
-                            details: speciesDetails.family,
-                          ),
-                          TitleWithListView(
-                            title: 'Origin',
-                            list: speciesDetails.origin,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Type',
-                            details: speciesDetails.type,
-                          ),
-                          TitleWithDimensionsView(
-                            title: 'Dimensions',
-                            dimensions: speciesDetails.dimensions,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Cycle',
-                            details: speciesDetails.cycle,
-                          ),
-                          TitleWithListView(
-                            title: 'Attracts',
-                            list: speciesDetails.attracts,
-                          ),
-                          TitleWithListView(
-                            title: 'Propagation',
-                            list: speciesDetails.propagation,
-                          ),
-                          HardinessView(
-                            title: 'Hardiness',
-                            hardiness: speciesDetails.hardiness,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Watering',
-                            details: speciesDetails.watering,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Watering Period',
-                            details: speciesDetails.wateringPeriod,
-                          ),
-                          WateringGeneralBenchmarkView(
-                            title: 'Watering General Benchmark',
-                            wateringGeneralBenchmark:
-                                speciesDetails.wateringGeneralBenchmark,
-                          ),
-                          TitleWithListView(
-                            title: 'Sunlight',
-                            list: speciesDetails.sunlight,
-                          ),
-                          TitleWithListView(
-                            title: 'Pruning Month',
-                            list: speciesDetails.pruningMonth,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Care Guide URI',
-                            details: speciesDetails.careGuideUri,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Growth Rate',
-                            details: speciesDetails.growthRate,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Drought Tolerant',
-                            details: speciesDetails.droughtTolerant.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Salt Tolerant',
-                            details: speciesDetails.saltTolerant.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Thorny',
-                            details: speciesDetails.thorny.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Invasive',
-                            details: speciesDetails.invasive.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Tropical',
-                            details: speciesDetails.tropical.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Indoor',
-                            details: speciesDetails.indoor.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Care Level',
-                            details: speciesDetails.careLevel,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Flowers',
-                            details: speciesDetails.flowers.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Cones',
-                            details: speciesDetails.cones.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Fruits',
-                            details: speciesDetails.fruits.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Edible Fruit',
-                            details: speciesDetails.edibleFruit.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Leaf',
-                            details: speciesDetails.leaf.toString(),
-                          ),
-                          TitleWithListView(
-                            title: 'Leaf Color',
-                            list: speciesDetails.leafColor,
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Edible Leaf',
-                            details: speciesDetails.edibleLeaf.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Cuisine',
-                            details: speciesDetails.cuisine.toString(),
-                          ),
-                          TitleWithDetailsView(
-                            title: 'Medicinal',
-                            details: speciesDetails.medicinal.toString(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Text('$err'),
+        data: (speciesDetails) {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: 300,
+                  child: Image.network(
+                    speciesDetails.defaultImage.regularUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              );
-            },
-          ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TitleWithDetailsView(
+                        title: 'Common Name',
+                        details: speciesDetails.commonName,
+                      ),
+                      TitleWithListView(
+                        title: 'Scientific Name',
+                        list: speciesDetails.scientificName,
+                      ),
+                      TitleWithListView(
+                        title: 'Other Name',
+                        list: speciesDetails.otherName,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Description',
+                        details: speciesDetails.description,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Family',
+                        details: speciesDetails.family,
+                      ),
+                      TitleWithListView(
+                        title: 'Origin',
+                        list: speciesDetails.origin,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Type',
+                        details: speciesDetails.type,
+                      ),
+                      TitleWithDimensionsView(
+                        title: 'Dimensions',
+                        dimensions: speciesDetails.dimensions,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Cycle',
+                        details: speciesDetails.cycle,
+                      ),
+                      TitleWithListView(
+                        title: 'Attracts',
+                        list: speciesDetails.attracts,
+                      ),
+                      TitleWithListView(
+                        title: 'Propagation',
+                        list: speciesDetails.propagation,
+                      ),
+                      HardinessView(
+                        title: 'Hardiness',
+                        hardiness: speciesDetails.hardiness,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Watering',
+                        details: speciesDetails.watering,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Watering Period',
+                        details: speciesDetails.wateringPeriod,
+                      ),
+                      WateringGeneralBenchmarkView(
+                        title: 'Watering General Benchmark',
+                        wateringGeneralBenchmark:
+                        speciesDetails.wateringGeneralBenchmark,
+                      ),
+                      TitleWithListView(
+                        title: 'Sunlight',
+                        list: speciesDetails.sunlight,
+                      ),
+                      TitleWithListView(
+                        title: 'Pruning Month',
+                        list: speciesDetails.pruningMonth,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Care Guide URI',
+                        details: speciesDetails.careGuideUri,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Growth Rate',
+                        details: speciesDetails.growthRate,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Drought Tolerant',
+                        details: speciesDetails.droughtTolerant.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Salt Tolerant',
+                        details: speciesDetails.saltTolerant.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Thorny',
+                        details: speciesDetails.thorny.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Invasive',
+                        details: speciesDetails.invasive.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Tropical',
+                        details: speciesDetails.tropical.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Indoor',
+                        details: speciesDetails.indoor.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Care Level',
+                        details: speciesDetails.careLevel,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Flowers',
+                        details: speciesDetails.flowers.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Cones',
+                        details: speciesDetails.cones.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Fruits',
+                        details: speciesDetails.fruits.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Edible Fruit',
+                        details: speciesDetails.edibleFruit.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Leaf',
+                        details: speciesDetails.leaf.toString(),
+                      ),
+                      TitleWithListView(
+                        title: 'Leaf Color',
+                        list: speciesDetails.leafColor,
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Edible Leaf',
+                        details: speciesDetails.edibleLeaf.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Cuisine',
+                        details: speciesDetails.cuisine.toString(),
+                      ),
+                      TitleWithDetailsView(
+                        title: 'Medicinal',
+                        details: speciesDetails.medicinal.toString(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
+}
+
+class SectionTitleWidget extends StatelessWidget {
+  final String _title;
+
+  const SectionTitleWidget(this._title, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      _title,
+      style: const TextStyle(fontStyle: FontStyle.italic),
+    );
+  }
+
 }
 
 class TitleWithDetailsView extends StatelessWidget {
@@ -214,7 +235,8 @@ class TitleWithDetailsView extends StatelessWidget {
     required String title,
     required String details,
     super.key,
-  })  : _title = title,
+  })
+      : _title = title,
         _details = details;
 
   @override
@@ -222,7 +244,7 @@ class TitleWithDetailsView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(_title),
+        SectionTitleWidget(_title),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 24.0,
@@ -243,7 +265,8 @@ class TitleWithListView extends StatelessWidget {
     required String title,
     required List<String> list,
     super.key,
-  })  : _title = title,
+  })
+      : _title = title,
         _list = list;
 
   @override
@@ -251,14 +274,14 @@ class TitleWithListView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(_title),
+        SectionTitleWidget(_title),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: List.generate(
               _list.length,
-              (index) => Text(_list[index]),
+                  (index) => Text(_list[index]),
             ),
           ),
         ),
@@ -277,7 +300,8 @@ class TitleWithDimensionsView extends StatelessWidget {
     required String title,
     required Dimensions dimensions,
     super.key,
-  })  : _title = title,
+  })
+      : _title = title,
         _dimensions = dimensions;
 
   @override
@@ -285,7 +309,7 @@ class TitleWithDimensionsView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(_title),
+        SectionTitleWidget(_title),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 24.0,
@@ -325,7 +349,8 @@ class HardinessView extends StatelessWidget {
     required String title,
     required Hardiness hardiness,
     super.key,
-  })  : _title = title,
+  })
+      : _title = title,
         _hardiness = hardiness;
 
   @override
@@ -333,7 +358,7 @@ class HardinessView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(_title),
+        SectionTitleWidget(_title),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 24.0,
@@ -365,7 +390,8 @@ class WateringGeneralBenchmarkView extends StatelessWidget {
     required String title,
     required WateringGeneralBenchmark wateringGeneralBenchmark,
     super.key,
-  })  : _title = title,
+  })
+      : _title = title,
         _wateringGeneralBenchmark = wateringGeneralBenchmark;
 
   @override
@@ -373,7 +399,7 @@ class WateringGeneralBenchmarkView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(_title),
+        SectionTitleWidget(_title),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 24.0,

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1050890248800",
+    "project_id": "plant-log-97eab",
+    "storage_bucket": "plant-log-97eab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050890248800:android:86407a647be3d2fbf11905",
+        "android_client_info": {
+          "package_name": "com.example.plant_log"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq7xRHx1Tk_ZYoVNUMW-F1uUhPBNUN2UE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
