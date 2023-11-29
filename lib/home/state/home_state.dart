@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/api/perenual/api/perenual_api.dart';
 import 'package:plant_log/api/perenual/models/species_entity.dart';
@@ -43,5 +45,10 @@ class HomeState extends StateNotifier<HomeViewModel> {
       speciesEntity: state.speciesEntity,
       showSearch: !state.showSearch,
     );
+  }
+
+  void search(String query) {
+    // TODO: Only make network call after ever 1 second
+    log('SEARCH FOR: $query');
   }
 }
