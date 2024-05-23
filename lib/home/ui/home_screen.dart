@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/home/model/home_view_model.dart';
@@ -29,7 +27,7 @@ class Home extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(
-          'Plant Log :3',
+          'Plant Log 🌵',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
