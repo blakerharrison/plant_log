@@ -1,4 +1,4 @@
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/home/model/home_view_model.dart';
@@ -28,7 +28,7 @@ class Home extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(
-          'Plant Log :3',
+          'Plant Log 🌵',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -118,17 +118,24 @@ class HomePlantListWidget extends StatelessWidget {
             child: Stack(
               children: [
                 Center(
-                  child: Image.network(
-                    homeViewModel
+                  child:
+                  CachedNetworkImage(
+                    imageUrl: homeViewModel
                         .speciesEntity.data[index].defaultImage.regularUrl,
-                    fit: BoxFit.cover,
-                    height: MediaQuery.of(context).size.height / 4,
+                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        Center(
+                            child: SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: CircularProgressIndicator(
+                                  value: downloadProgress.progress,
+                              ),
+                            ),
+                        ),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    height: MediaQuery.of(context).size.height / 2.3,
                     width: MediaQuery.of(context).size.width,
-                    errorBuilder: (context, error, stackTrace) => SizedBox(
-                      height: MediaQuery.of(context).size.height / 4,
-                      width: 200,
-                      child: const Icon(Icons.error),
-                    ),
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Align(

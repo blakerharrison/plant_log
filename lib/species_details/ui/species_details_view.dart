@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:plant_log/api/logger/logger.dart';
@@ -28,7 +29,7 @@ class SpeciesDetailsView extends HookConsumerWidget {
             .colorScheme
             .inversePrimary,
         title: const Text(
-          'Plant Details 3:<',
+          'Plant Details 🌺',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -43,16 +44,22 @@ class SpeciesDetailsView extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: 300,
-                  child: Image.network(
-                    speciesDetails.defaultImage.regularUrl,
-                    fit: BoxFit.cover,
-                  ),
+                CachedNetworkImage(
+                  imageUrl: speciesDetails.defaultImage.regularUrl,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                        child: SizedBox(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                          ),
+                        ),
+                      ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  height: MediaQuery.of(context).size.height / 2.3,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
