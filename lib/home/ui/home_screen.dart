@@ -68,18 +68,20 @@ class Home extends ConsumerWidget {
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.fastOutSlowIn,
                       opacity: homeViewModel.showLoginWidget ? 1 : 0,
-                      child: const LoginWidget(),
+                      child: LoginWidget(ref: ref),
                     ),
                   ),
                 ),
               ],
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            ref.read(homeViewModelProvider.notifier).toggleLoginWidget(),
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.key),
-      ),
+      floatingActionButton: homeViewModel.showLoginWidget
+          ? null
+          : FloatingActionButton(
+              onPressed: () =>
+                  ref.read(homeViewModelProvider.notifier).toggleLoginWidget(),
+              backgroundColor: Colors.green,
+              child: const Icon(Icons.key),
+            ),
     );
   }
 }
@@ -201,7 +203,9 @@ class HomePlantListWidget extends StatelessWidget {
 }
 
 class LoginWidget extends StatefulWidget {
-  const LoginWidget({super.key});
+  final WidgetRef ref;
+
+  const LoginWidget({super.key, required this.ref});
 
   @override
   State<StatefulWidget> createState() => LoginState();
@@ -219,34 +223,54 @@ class LoginState extends State<LoginWidget> {
       ),
       width: MediaQuery.sizeOf(context).width * 0.9,
       height: MediaQuery.sizeOf(context).height * 0.45,
-      child: const Padding(
-        padding: EdgeInsets.all(32.0),
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Login',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Row(
+              children: [
+                const Spacer(),
+                IconButton(
+                  onPressed: () => widget.ref
+                      .read(homeViewModelProvider.notifier)
+                      .toggleLoginWidget(),
+                  icon: const Icon(Icons.close),
+                ),
+              ],
             ),
-            Text(
-              'Email',
-              style: TextStyle(),
-            ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
+                hintText: 'Email',
                 filled: true,
                 fillColor: Colors.white,
               ),
             ),
-            Text(
-              'Password',
-              style: TextStyle(),
-            ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
+                hintText: 'Password',
                 filled: true,
                 fillColor: Colors.white,
+              ),
+            ),
+            Center(
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.green,
+                    elevation: 3,
+                  ),
+                  onPressed: () {
+                    /*
+                    TODO: Add login logic that captures the email here
+                    TODO: and executes the Firebase sign in method.
+                     */
+                  },
+                  child: const Text("Login"),
+                ),
               ),
             ),
           ],
