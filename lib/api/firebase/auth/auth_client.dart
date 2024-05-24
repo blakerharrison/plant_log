@@ -1,32 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthClient {
-  AuthClient() {
+final authClient = _AuthClient();
+
+class _AuthClient {
+  _AuthClient() {
     _setupListeners();
   }
 
   void _setupListeners() {
-    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User? user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         print('authStateChanges: User is currently signed out!');
       } else {
         print('authStateChanges: User is signed in!');
       }
     });
-    FirebaseAuth.instance
-        .idTokenChanges()
-        .listen((User? user) {
+    FirebaseAuth.instance.idTokenChanges().listen((User? user) {
       if (user == null) {
         print('idTokenChanges: User is currently signed out!');
       } else {
         print('idTokenChanges: User is signed in!');
       }
     });
-    FirebaseAuth.instance
-        .userChanges()
-        .listen((User? user) {
+    FirebaseAuth.instance.userChanges().listen((User? user) {
       if (user == null) {
         print('userChanges: User is currently signed out!');
       } else {
@@ -35,22 +31,32 @@ class AuthClient {
     });
   }
 
-  Future<void> signIn(String email, String password) async {
+  Future<void> signIn(
+    String email,
+    String password,
+    Function(FirebaseSignInErrorCode) onError,
+  ) async {
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
+      var code = FirebaseSignInErrorCode.unknown;
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        code = FirebaseSignInErrorCode.userNotFound;
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        code = FirebaseSignInErrorCode.wrongPassword;
       }
+      onError(code);
     }
   }
 
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
+}
+
+enum FirebaseSignInErrorCode {
+  userNotFound,
+  wrongPassword,
+  unknown,
 }
