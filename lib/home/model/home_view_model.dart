@@ -5,6 +5,7 @@ class HomeViewModel extends Equatable {
   final SpeciesEntity speciesEntity;
   final bool showSearch;
   final List<String> searchSuggestions;
+  final bool showLoginWidget;
 
   const HomeViewModel({
     this.speciesEntity = const SpeciesEntity(),
@@ -18,12 +19,14 @@ class HomeViewModel extends Equatable {
       'Magic',
       'Bloodleaf',
     ],
+    this.showLoginWidget = false,
   });
 
   @override
   List<Object?> get props => [
-    speciesEntity,
-    showSearch,
-    searchSuggestions,
-  ];
+        speciesEntity,
+        showSearch,
+        searchSuggestions,
+        showLoginWidget,
+      ];
 }

@@ -14,6 +14,7 @@ class HomeState extends StateNotifier<HomeViewModel> {
   int page = 0;
   bool isLoading = false;
   bool showSearch = false;
+  bool showLoginWidget = false;
 
   HomeState({PerenualAPI? perenualAPI})
       : perenualAPI = perenualAPI ?? PerenualAPI(),
@@ -44,11 +45,20 @@ class HomeState extends StateNotifier<HomeViewModel> {
     state = HomeViewModel(
       speciesEntity: state.speciesEntity,
       showSearch: !state.showSearch,
+      showLoginWidget: state.showLoginWidget,
     );
   }
 
   void search(String query) {
     // TODO: Only make network call after ever 1 second
     log('SEARCH FOR: $query');
+  }
+
+  void toggleLoginWidget() {
+    state = HomeViewModel(
+      speciesEntity: state.speciesEntity,
+      showSearch: state.showSearch,
+      showLoginWidget: !state.showLoginWidget,
+    );
   }
 }

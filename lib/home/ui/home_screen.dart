@@ -51,18 +51,32 @@ class Home extends ConsumerWidget {
               presenter: presenter,
               ref: ref,
             )
-          : SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              controller: _scrollController,
-              child: HomePlantListWidget(
-                  homeViewModel: homeViewModel, presenter: presenter),
+          : Stack(
+              children: [
+                SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: _scrollController,
+                  child: HomePlantListWidget(
+                      homeViewModel: homeViewModel, presenter: presenter),
+                ),
+                Center(
+                  child: Visibility(
+                    visible: homeViewModel.showLoginWidget,
+                    maintainAnimation: true,
+                    maintainState: true,
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn,
+                      opacity: homeViewModel.showLoginWidget ? 1 : 0,
+                      child: const LoginWidget(),
+                    ),
+                  ),
+                ),
+              ],
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // TODO: Implement navigation to a login screen.
-          await authClient.signIn('', '');
-          // await authClient.signOut();
-        },
+        onPressed: () =>
+            ref.read(homeViewModelProvider.notifier).toggleLoginWidget(),
         backgroundColor: Colors.green,
         child: const Icon(Icons.key),
       ),
@@ -130,21 +144,21 @@ class HomePlantListWidget extends StatelessWidget {
             child: Stack(
               children: [
                 Center(
-                  child:
-                  CachedNetworkImage(
+                  child: CachedNetworkImage(
                     imageUrl: homeViewModel
                         .speciesEntity.data[index].defaultImage.regularUrl,
-                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                        Center(
-                            child: SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: CircularProgressIndicator(
-                                  value: downloadProgress.progress,
-                              ),
-                            ),
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
+                      child: SizedBox(
+                        height: 25,
+                        width: 25,
+                        child: CircularProgressIndicator(
+                          value: downloadProgress.progress,
                         ),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                     height: MediaQuery.of(context).size.height / 2.3,
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
@@ -180,6 +194,62 @@ class HomePlantListWidget extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class LoginWidget extends StatefulWidget {
+  const LoginWidget({super.key});
+
+  @override
+  State<StatefulWidget> createState() => LoginState();
+}
+
+class LoginState extends State<LoginWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.amberAccent,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      width: MediaQuery.sizeOf(context).width * 0.9,
+      height: MediaQuery.sizeOf(context).height * 0.45,
+      child: const Padding(
+        padding: EdgeInsets.all(32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Login',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Email',
+              style: TextStyle(),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+            Text(
+              'Password',
+              style: TextStyle(),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
     );
