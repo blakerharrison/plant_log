@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/home/model/home_view_model.dart';
 import 'package:plant_log/home/state/home_state.dart';
 import 'package:plant_log/home/ui/home_presenter.dart';
+
+final AuthClient authClient = AuthClient();
 
 class Home extends ConsumerWidget {
   final HomePresenter presenter;
@@ -54,6 +57,15 @@ class Home extends ConsumerWidget {
               child: HomePlantListWidget(
                   homeViewModel: homeViewModel, presenter: presenter),
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          // TODO: Implement navigation to a login screen.
+          await authClient.signIn('', '');
+          // await authClient.signOut();
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.key),
+      ),
     );
   }
 }
