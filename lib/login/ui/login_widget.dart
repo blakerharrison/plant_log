@@ -285,9 +285,11 @@ class LoginState extends State<LoginWidget> {
     }
   }
 
-  void navigateToSignUp(BuildContext context) => showModalBottomSheet(
+  void navigateToSignUp(BuildContext context) async {
+    showModalBottomSheet(
       context: context,
       builder: (BuildContext context) => const SignUpScreen(),
       isScrollControlled: true,
     );
+  }
 }

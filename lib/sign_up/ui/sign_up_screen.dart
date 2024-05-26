@@ -10,8 +10,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class SignUpState extends State<SignUpScreen> {
+  final nameTextController = TextEditingController();
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
+  final confirmPasswordTextController = TextEditingController();
   bool loading = false;
 
   @override
@@ -34,38 +36,70 @@ class SignUpState extends State<SignUpScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Email'),
-            TextField(
-              controller: emailTextController,
-            ),
-            const SizedBox(height: 16),
-            const Text('Password'),
-            TextField(
-              controller: passwordTextController,
-            ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: ThemeColors.secondaryButton,
-                  elevation: 3,
-                ),
-                onPressed: signUp,
-                child: const Text('Sign Up'),
+      body: AbsorbPointer(
+        absorbing: loading,
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _textFieldWithHeader(
+                title: 'Name',
+                controller: nameTextController,
               ),
-            ),
-          ],
+              _textFieldWithHeader(
+                title: 'Email',
+                controller: emailTextController,
+              ),
+              _textFieldWithHeader(
+                title: 'Password',
+                controller: passwordTextController,
+                obscureText: true,
+              ),
+              _textFieldWithHeader(
+                title: 'Confirm Password',
+                controller: confirmPasswordTextController,
+                obscureText: true,
+              ),
+              const Spacer(),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: ThemeColors.secondaryButton,
+                    elevation: 3,
+                  ),
+                  onPressed: signUp,
+                  child: const Text('Sign Up'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  Column _textFieldWithHeader({
+    required String title,
+    required TextEditingController controller,
+    bool obscureText = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title),
+        TextField(
+          controller: controller,
+          obscureText: obscureText,
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  void validateForm() {}
 
   Future<void> signUp() async {
     setState(() => loading = true);
