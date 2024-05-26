@@ -1,13 +1,16 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
+import 'package:plant_log/shared/theme/theme_colors.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function closeButtonCallback;
 
-   const LoginWidget({super.key, required this.closeButtonCallback});
+  const LoginWidget({super.key, required this.closeButtonCallback});
 
   @override
   State<StatefulWidget> createState() => LoginState();
@@ -18,13 +21,151 @@ class LoginState extends State<LoginWidget> {
   final passwordTextController = TextEditingController();
   bool loading = false;
 
+  User? get currentUser => authClient.currentUser();
+
   @override
   Widget build(BuildContext context) {
+    return (currentUser != null) ? logoutWidget() : signInWidget(context);
+  }
+
+  Container logoutWidget() => Container(
+        decoration: BoxDecoration(
+            color: ThemeColors.secondaryBackground,
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 7,
+                offset: const Offset(0, 4),
+              ),
+            ]),
+        width: MediaQuery.sizeOf(context).width * 0.9,
+        height: MediaQuery.sizeOf(context).height * 0.50,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Spacer(),
+                IconButton(
+                  onPressed: () => widget.closeButtonCallback(),
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'Profile',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Name: ',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    currentUser?.displayName ?? 'Unknown',
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Spacer(),
+                  CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: currentUser?.photoURL ?? '',
+                    height: 75,
+                    width: 75,
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Email: ',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    currentUser?.email ?? 'Unknown',
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  const Text(
+                    'Phone: ',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    currentUser?.phoneNumber ?? 'Unknown',
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 16),
+              child: SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: ThemeColors.secondaryButton,
+                    elevation: 3,
+                  ),
+                  onPressed: () => logout(),
+                  child: const Text("Logout"),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Container signInWidget(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.amberAccent,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
+      decoration: BoxDecoration(
+          color: ThemeColors.secondaryBackground,
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 7,
+              offset: const Offset(0, 4), // changes position of shadow
+            ),
+          ]),
       width: MediaQuery.sizeOf(context).width * 0.9,
       height: MediaQuery.sizeOf(context).height * 0.45,
       child: Stack(
@@ -37,11 +178,20 @@ class LoginState extends State<LoginWidget> {
               children: [
                 Row(
                   children: [
+                    const Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
                     const Spacer(),
                     IconButton(
-                      // TODO: Replace with a callback to decouple this.
                       onPressed: () => widget.closeButtonCallback(),
-                      icon: const Icon(Icons.close),
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -51,7 +201,12 @@ class LoginState extends State<LoginWidget> {
                     hintText: 'Email',
                     filled: true,
                     fillColor: Colors.white,
+                    counterText: '',
                   ),
+                  maxLength: 50,
+                ),
+                const SizedBox(
+                  height: 8,
                 ),
                 TextField(
                   controller: passwordTextController,
@@ -59,16 +214,21 @@ class LoginState extends State<LoginWidget> {
                     hintText: 'Password',
                     filled: true,
                     fillColor: Colors.white,
+                    counterText: '',
                   ),
                   obscureText: true,
+                  maxLength: 50,
+                ),
+                const SizedBox(
+                  height: 16,
                 ),
                 Center(
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.black,
+                        backgroundColor: ThemeColors.secondaryButton,
                         elevation: 3,
                       ),
                       onPressed: () => signIn(),
@@ -79,8 +239,7 @@ class LoginState extends State<LoginWidget> {
               ],
             ),
           ),
-          if (loading)
-            const LoadingIndicator(),
+          if (loading) const LoadingIndicator(),
         ],
       ),
     );
@@ -93,6 +252,12 @@ class LoginState extends State<LoginWidget> {
       passwordTextController.text,
       signInError,
     );
+    setState(() => loading = false);
+  }
+
+  Future<void> logout() async {
+    setState(() => loading = true);
+    await authClient.signOut();
     setState(() => loading = false);
   }
 

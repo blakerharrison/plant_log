@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/home/model/home_view_model.dart';
@@ -26,65 +25,68 @@ class Home extends ConsumerWidget {
         ref.read(homeViewModelProvider.notifier).fetchMoreSpeciesData();
       }
     });
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text(
-          'Plant Log 🌵',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text(
+            'Plant Log 🌵',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () =>
-                ref.read(homeViewModelProvider.notifier).toggleSearch(),
-            icon: Icon(homeViewModel.showSearch ? Icons.close : Icons.search),
-          )
-        ],
-      ),
-      body: homeViewModel.showSearch
-          ? PlantSearchWidget(
-              homeViewModel: homeViewModel,
-              presenter: presenter,
-              ref: ref,
+          actions: [
+            IconButton(
+              onPressed: () =>
+                  ref.read(homeViewModelProvider.notifier).toggleSearch(),
+              icon: Icon(homeViewModel.showSearch ? Icons.close : Icons.search),
             )
-          : Stack(
-              children: [
-                SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  controller: _scrollController,
-                  child: HomePlantListWidget(
-                      homeViewModel: homeViewModel, presenter: presenter),
-                ),
-                Center(
-                  child: Visibility(
-                    visible: homeViewModel.showLoginWidget,
-                    maintainAnimation: true,
-                    maintainState: true,
-                    child: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.fastOutSlowIn,
-                      opacity: homeViewModel.showLoginWidget ? 1 : 0,
-                      child: LoginWidget(
-                        closeButtonCallback: ref
-                            .read(homeViewModelProvider.notifier)
-                            .toggleLoginWidget,
+          ],
+        ),
+        body: homeViewModel.showSearch
+            ? PlantSearchWidget(
+                homeViewModel: homeViewModel,
+                presenter: presenter,
+                ref: ref,
+              )
+            : Stack(
+                children: [
+                  SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    controller: _scrollController,
+                    child: HomePlantListWidget(
+                        homeViewModel: homeViewModel, presenter: presenter),
+                  ),
+                  Center(
+                    child: Visibility(
+                      visible: homeViewModel.showLoginWidget,
+                      maintainAnimation: true,
+                      maintainState: true,
+                      child: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.fastOutSlowIn,
+                        opacity: homeViewModel.showLoginWidget ? 1 : 0,
+                        child: LoginWidget(
+                          closeButtonCallback: ref
+                              .read(homeViewModelProvider.notifier)
+                              .toggleLoginWidget,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-      floatingActionButton: homeViewModel.showLoginWidget
-          ? null
-          : FloatingActionButton(
-              onPressed: () =>
-                  ref.read(homeViewModelProvider.notifier).toggleLoginWidget(),
-              backgroundColor: Colors.green,
-              child: const Icon(Icons.key),
-            ),
+                ],
+              ),
+        floatingActionButton: homeViewModel.showLoginWidget
+            ? null
+            : FloatingActionButton(
+                onPressed: () =>
+                    ref.read(homeViewModelProvider.notifier).toggleLoginWidget(),
+                backgroundColor: Colors.green,
+                child: const Icon(Icons.key),
+              ),
+      ),
     );
   }
 }

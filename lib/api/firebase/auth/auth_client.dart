@@ -50,6 +50,10 @@ class _AuthClient {
     }
   }
 
+  User? currentUser() {
+    return FirebaseAuth.instance.currentUser;
+  }
+
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
