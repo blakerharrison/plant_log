@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
 
-class SignUpWidget extends StatefulWidget {
-  const SignUpWidget({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => SignUpState();
 }
 
-class SignUpState extends State<SignUpWidget> {
+class SignUpState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

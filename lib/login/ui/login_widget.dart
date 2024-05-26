@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
-import 'package:plant_log/sign_up/ui/sign_up_widget.dart';
+import 'package:plant_log/sign_up/ui/sign_up_screen.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function closeButtonCallback;
@@ -287,7 +287,7 @@ class LoginState extends State<LoginWidget> {
 
   void navigateToSignUp(BuildContext context) => showModalBottomSheet(
       context: context,
-      builder: (BuildContext context) => const SignUpWidget(),
+      builder: (BuildContext context) => const SignUpScreen(),
       isScrollControlled: true,
     );
 }
