@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
+import 'package:plant_log/sign_up/ui/sign_up_widget.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function closeButtonCallback;
@@ -236,6 +237,18 @@ class LoginState extends State<LoginWidget> {
                     ),
                   ),
                 ),
+                Center(
+                  child: TextButton(
+                    onPressed: () => navigateToSignUp(context),
+                    child: const Text(
+                      'Create Account ',
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w300),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -271,4 +284,10 @@ class LoginState extends State<LoginWidget> {
         log('🔥❌ - FirebaseSignInErrorCode: wrongPassword');
     }
   }
+
+  void navigateToSignUp(BuildContext context) => showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => const SignUpWidget(),
+      isScrollControlled: true,
+    );
 }
