@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/home/model/home_view_model.dart';
 import 'package:plant_log/home/state/home_state.dart';
 import 'package:plant_log/home/ui/home_presenter.dart';
@@ -81,10 +82,13 @@ class Home extends ConsumerWidget {
         floatingActionButton: homeViewModel.showLoginWidget
             ? null
             : FloatingActionButton(
-                onPressed: () =>
-                    ref.read(homeViewModelProvider.notifier).toggleLoginWidget(),
+                onPressed: () => ref
+                    .read(homeViewModelProvider.notifier)
+                    .toggleLoginWidget(),
                 backgroundColor: Colors.green,
-                child: const Icon(Icons.key),
+                child: Icon(
+                  (authClient.currentUser() == null) ? Icons.key : Icons.person,
+                ),
               ),
       ),
     );
@@ -206,7 +210,3 @@ class HomePlantListWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-
