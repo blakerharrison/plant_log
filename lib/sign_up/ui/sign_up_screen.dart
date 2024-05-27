@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  final Function signUpSuccessCallback;
+
+  const SignUpScreen({super.key, required this.signUpSuccessCallback});
 
   @override
   State<StatefulWidget> createState() => SignUpState();
@@ -70,7 +74,7 @@ class SignUpState extends State<SignUpScreen> {
                     backgroundColor: ThemeColors.secondaryButton,
                     elevation: 3,
                   ),
-                  onPressed: signUp,
+                  onPressed: () => signUp(widget.signUpSuccessCallback),
                   child: const Text('Sign Up'),
                 ),
               ),
@@ -101,12 +105,18 @@ class SignUpState extends State<SignUpScreen> {
 
   void validateForm() {}
 
-  Future<void> signUp() async {
+  Future<void> signUp(Function successCallback) async {
     setState(() => loading = true);
-    await authClient.signUp(
-      email: emailTextController.text,
-      password: passwordTextController.text,
-    );
+    try {
+      await authClient.signUp(
+        email: emailTextController.text,
+        password: passwordTextController.text,
+        displayName: nameTextController.text,
+      );
+      successCallback();
+    } catch (e) {
+      log('❌ Error has occured, please handle.');
+    }
     setState(() => loading = false);
   }
 }

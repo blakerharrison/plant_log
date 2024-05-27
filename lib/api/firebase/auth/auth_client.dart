@@ -63,16 +63,23 @@ class _AuthClient {
   Future<void> signUp({
     required String email,
     required String password,
+    required String displayName,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      if (FirebaseAuth.instance.currentUser != null) {
+        await FirebaseAuth.instance.currentUser!.updateDisplayName(displayName);
+        // TODO: Change with uploaded photo url.
+        await FirebaseAuth.instance.currentUser!.updatePhotoURL(
+          'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg',
+        );
+      }
     } catch (e) {
       log('e');
     }
-
   }
 }
 
