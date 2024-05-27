@@ -17,7 +17,7 @@ final speciesDetailsEntityProvider = FutureProvider.autoDispose
 });
 
 class SpeciesDetailsView extends HookConsumerWidget {
-  const SpeciesDetailsView({Key? key}) : super(key: key);
+  const SpeciesDetailsView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -12,23 +12,23 @@ class _AuthClient {
   void _setupListeners() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
-        print('authStateChanges: User is currently signed out!');
+        log('authStateChanges: User is currently signed out!');
       } else {
-        print('authStateChanges: User is signed in!');
+        log('authStateChanges: User is signed in!');
       }
     });
     FirebaseAuth.instance.idTokenChanges().listen((User? user) {
       if (user == null) {
-        print('idTokenChanges: User is currently signed out!');
+        log('idTokenChanges: User is currently signed out!');
       } else {
-        print('idTokenChanges: User is signed in!');
+        log('idTokenChanges: User is signed in!');
       }
     });
     FirebaseAuth.instance.userChanges().listen((User? user) {
       if (user == null) {
-        print('userChanges: User is currently signed out!');
+        log('userChanges: User is currently signed out!');
       } else {
-        print('userChanges: User is signed in!');
+        log('userChanges: User is signed in!');
       }
     });
   }
@@ -39,7 +39,7 @@ class _AuthClient {
     Function(FirebaseSignInErrorCode) onError,
   ) async {
     try {
-      final credential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       var code = FirebaseSignInErrorCode.unknown;
