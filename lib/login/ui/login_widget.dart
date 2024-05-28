@@ -295,8 +295,9 @@ class LoginState extends State<LoginWidget> {
     );
   }
 
+  // TODO: Only pop on success
   void signUpSuccessCallback(BuildContext context) {
-    Navigator.pop(context);
+    // Navigator.pop(context);
     setState(() {});
   }
 }
