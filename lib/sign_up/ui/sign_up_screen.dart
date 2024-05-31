@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
+import 'package:plant_log/upload_profile_photo/ui/upload_profile_photo_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   final Function signUpSuccessCallback;
@@ -122,7 +123,10 @@ class SignUpState extends State<SignUpScreen> {
                       backgroundColor: ThemeColors.secondaryButton,
                       elevation: 3,
                     ),
-                    onPressed: () => signUp(widget.signUpSuccessCallback),
+                    onPressed: () => signUp(
+                      context,
+                      successCallback: widget.signUpSuccessCallback,
+                    ),
                     child: const Text('Sign Up'),
                   ),
                 ),
@@ -141,13 +145,9 @@ class SignUpState extends State<SignUpScreen> {
     return null;
   }
 
-  Future<void> signUp(Function successCallback) async {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Processing Data')),
-      );
-      return;
-    }
+  Future<void> signUp(BuildContext context,
+      {required Function successCallback}) async {
+    if (!_formKey.currentState!.validate()) { return; }
     setState(() => loading = true);
     try {
       await authClient.signUp(
@@ -156,9 +156,17 @@ class SignUpState extends State<SignUpScreen> {
         displayName: nameTextController.text,
       );
       successCallback();
+      if (!context.mounted) return;
+      _navigateToUploadProfilePhotoScreen(context);
     } catch (e) {
       log('❌ Error has occurred, please handle.');
     }
     setState(() => loading = false);
+  }
+
+  void _navigateToUploadProfilePhotoScreen(BuildContext context) async {
+    Route route =
+        MaterialPageRoute(builder: (context) => const UploadProfilePhotoScreen());
+    await Navigator.of(context).pushReplacement(route);
   }
 }
