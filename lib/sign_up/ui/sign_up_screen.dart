@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 
-//TODO: Write form validation
 class SignUpScreen extends StatefulWidget {
   final Function signUpSuccessCallback;
 
@@ -21,7 +20,6 @@ class SignUpState extends State<SignUpScreen> {
   final passwordTextController = TextEditingController();
   final confirmPasswordTextController = TextEditingController();
   bool loading = false;
-  bool didValidateForTheFirstTime = false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +56,10 @@ class SignUpState extends State<SignUpScreen> {
                     const Text('Name'),
                     TextFormField(
                       controller: nameTextController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a name';
-                        }
-                        return null;
-                      },
+                      validator: (value) => _validator(
+                        value,
+                        formFileName: 'name',
+                      ),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -74,12 +70,10 @@ class SignUpState extends State<SignUpScreen> {
                     const Text('Email'),
                     TextFormField(
                       controller: emailTextController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter an email';
-                        }
-                        return null;
-                      },
+                      validator: (value) => _validator(
+                        value,
+                        formFileName: 'email',
+                      ),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -90,12 +84,11 @@ class SignUpState extends State<SignUpScreen> {
                     const Text('Password'),
                     TextFormField(
                       controller: passwordTextController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter an password';
-                        }
-                        return null;
-                      },
+                      obscureText: true,
+                      validator: (value) => _validator(
+                        value,
+                        formFileName: 'password',
+                      ),
                     ),
                     const SizedBox(height: 16),
                   ],
@@ -106,9 +99,13 @@ class SignUpState extends State<SignUpScreen> {
                     const Text('Confirm password'),
                     TextFormField(
                       controller: confirmPasswordTextController,
+                      obscureText: true,
                       validator: (value) {
-                        if (value == passwordTextController.text) {
+                        if (value != passwordTextController.text) {
                           return 'Passwords do not match';
+                        }
+                        if (value == null || value.isEmpty) {
+                          return 'This field cannot be empty.';
                         }
                         return null;
                       },
@@ -137,38 +134,18 @@ class SignUpState extends State<SignUpScreen> {
     );
   }
 
-  Column _textFieldWithHeader({
-    required String title,
-    required TextEditingController controller,
-    bool obscureText = false,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title),
-        TextFormField(
-          controller: controller,
-          obscureText: obscureText,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
-        ),
-        const SizedBox(height: 16),
-      ],
-    );
+  String? _validator(value, {required String formFileName}) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a name';
+    }
+    return null;
   }
-
-  void validateForm() {}
 
   Future<void> signUp(Function successCallback) async {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Data')),
       );
-      didValidateForTheFirstTime = true;
       return;
     }
     setState(() => loading = true);
