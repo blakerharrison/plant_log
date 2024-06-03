@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
@@ -169,7 +168,7 @@ class LoginState extends State<LoginWidget> {
             ),
           ]),
       width: MediaQuery.sizeOf(context).width * 0.9,
-      height: MediaQuery.sizeOf(context).height * 0.49,
+      height: MediaQuery.sizeOf(context).height * 0.45,
       child: Stack(
         children: [
           Padding(
@@ -239,12 +238,6 @@ class LoginState extends State<LoginWidget> {
                   ),
                 ),
                 Center(
-                  child: SignInButton(
-                    Buttons.Google,
-                    onPressed: () => signInWithGoogle(),
-                  ),
-                ),
-                Center(
                   child: TextButton(
                     onPressed: () => navigateToSignUp(context),
                     child: const Text(
@@ -272,24 +265,6 @@ class LoginState extends State<LoginWidget> {
       passwordTextController.text,
       signInError,
     );
-    setState(() => loading = false);
-  }
-
-  void signInWithGoogle() async {
-    setState(() => loading = true);
-    try {
-      final credential = await authClient.signInWithGoogle();
-      if (credential.credential != null) {
-        // Success
-        log('🔑 ${credential.credential}');
-
-      } else {
-        // Error
-      }
-    } catch (e) {
-      // TODO: Handle Error
-      log('❌ Google Sign in error:\n$e');
-    }
     setState(() => loading = false);
   }
 
