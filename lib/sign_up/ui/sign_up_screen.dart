@@ -166,7 +166,7 @@ class SignUpState extends State<SignUpScreen> {
 
   void _navigateToUploadProfilePhotoScreen(BuildContext context) async {
     Route route =
-        MaterialPageRoute(builder: (context) => const UploadProfilePhotoScreen());
+        MaterialPageRoute(builder: (context) => UploadProfilePhotoScreen());
     await Navigator.of(context).pushReplacement(route);
   }
 }
