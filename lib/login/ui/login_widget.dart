@@ -42,7 +42,7 @@ class LoginState extends State<LoginWidget> {
               ),
             ]),
         width: MediaQuery.sizeOf(context).width * 0.9,
-        height: MediaQuery.sizeOf(context).height * 0.50,
+        height: MediaQuery.sizeOf(context).height * 0.40,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -114,26 +114,6 @@ class LoginState extends State<LoginWidget> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  const Text(
-                    'Phone: ',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    currentUser?.phoneNumber ?? 'Unknown',
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 16),
               child: SizedBox(
