@@ -7,7 +7,11 @@ import 'package:plant_log/home/ui/home_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  bool enableFirebaseAuthEmulator =
+      const bool.fromEnvironment('ENABLE_FIREBASE_AUTH_EMULATOR');
+  if (enableFirebaseAuthEmulator == true) {
+    await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  }
   runApp(const PlantLogApp());
 }
 
@@ -22,7 +26,6 @@ class _PlantLogAppState extends State<PlantLogApp> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
