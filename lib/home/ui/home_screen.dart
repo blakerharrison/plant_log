@@ -7,11 +7,11 @@ import 'package:plant_log/home/state/home_state.dart';
 import 'package:plant_log/home/ui/home_presenter.dart';
 import 'package:plant_log/login/ui/login_widget.dart';
 
-class Home extends ConsumerWidget {
+class HomeScreen extends ConsumerWidget {
   final HomePresenter presenter;
   final ScrollController _scrollController = ScrollController();
 
-  Home({
+  HomeScreen({
     super.key,
     HomePresenter? homePresenter,
   }) : presenter = homePresenter ?? HomePresenter();

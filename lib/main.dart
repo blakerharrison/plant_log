@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/home/ui/home_screen.dart';
+import 'package:plant_log/upload_profile_photo/ui/upload_profile_photo_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +38,8 @@ class _PlantLogAppState extends State<PlantLogApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
           useMaterial3: true,
         ),
-        home: Home(),
+        // home: HomeScreen(),
+        home: UploadProfilePhotoScreen(),
       ),
     );
   }
