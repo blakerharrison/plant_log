@@ -18,8 +18,8 @@ class LoadingIndicator extends StatelessWidget {
           ),
         ),
         const Center(
-          child: CircularProgressIndicator(
-            color: Colors.lightGreenAccent,
+          child: CircularProgressIndicator.adaptive(
+            backgroundColor: Colors.lightGreenAccent,
           ),
         ),
       ],

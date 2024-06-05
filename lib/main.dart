@@ -39,7 +39,7 @@ class _PlantLogAppState extends State<PlantLogApp> {
           useMaterial3: true,
         ),
         // home: HomeScreen(),
-        home: UploadProfilePhotoScreen(),
+        home: HomeScreen(),
       ),
     );
   }
