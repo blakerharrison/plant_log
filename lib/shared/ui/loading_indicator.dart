@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({super.key});
+  final bool showBackground;
+  final bool enableDark;
+
+  const LoadingIndicator({
+    super.key,
+    this.showBackground = true,
+    this.enableDark = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -9,17 +16,19 @@ class LoadingIndicator extends StatelessWidget {
       children: [
         Center(
           child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-            ),
+            decoration: showBackground
+                ? const BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  )
+                : null,
             height: 65,
             width: 65,
           ),
         ),
-        const Center(
+        Center(
           child: CircularProgressIndicator.adaptive(
-            backgroundColor: Colors.lightGreenAccent,
+            backgroundColor: enableDark ? Colors.green : Colors.lightGreenAccent,
           ),
         ),
       ],

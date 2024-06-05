@@ -8,6 +8,7 @@ import 'package:plant_log/home/ui/home_presenter.dart';
 import 'package:plant_log/login/ui/login_screen.dart';
 import 'package:plant_log/login/ui/login_widget.dart';
 import 'package:plant_log/search/ui/plant_search_screen.dart';
+import 'package:plant_log/shared/ui/loading_indicator.dart';
 
 class HomeScreen extends ConsumerWidget {
   final HomePresenter presenter;
@@ -84,7 +85,7 @@ class HomeScreen extends ConsumerWidget {
         floatingActionButton: homeViewModel.showLoginWidget
             ? null
             : FloatingActionButton(
-                onPressed: () => navigateToLogin(context),
+                onPressed: () => navigateToLogin(context, ref),
                 backgroundColor: Colors.green,
                 child: Icon(
                   (authClient.currentUser() == null) ? Icons.key : Icons.person,
@@ -94,18 +95,19 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  void navigateToLogin(BuildContext context) async {
+  void navigateToLogin(BuildContext context, WidgetRef ref) async {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) => LoginScreen(
-        loginSuccessCallback: () => loginScreenCallback(context),
+        loginSuccessCallback: () => loginScreenCallback(context, ref),
       ),
       isScrollControlled: true,
     );
   }
 
-  void loginScreenCallback(BuildContext context) {
+  void loginScreenCallback(BuildContext context, WidgetRef ref) {
     Navigator.pop(context);
+    ref.read(homeViewModelProvider.notifier).toggleLoginWidget();
   }
 }
 
@@ -139,12 +141,13 @@ class HomePlantListWidget extends StatelessWidget {
                     imageUrl: homeViewModel
                         .speciesEntity.data[index].defaultImage.regularUrl,
                     progressIndicatorBuilder:
-                        (context, url, downloadProgress) => Center(
+                        (context, url, downloadProgress) => const Center(
                       child: SizedBox(
                         height: 25,
                         width: 25,
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
+                        child: LoadingIndicator(
+                          showBackground: false,
+                          enableDark: true,
                         ),
                       ),
                     ),
