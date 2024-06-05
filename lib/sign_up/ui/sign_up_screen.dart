@@ -164,15 +164,14 @@ class SignUpState extends State<SignUpScreen> {
   }
 
   String? confirmPasswordValidator(value) {
-                            if (value != passwordTextController.text) {
-                              return 'Passwords do not match';
-                            }
-                            if (value == null || value.isEmpty) {
-                              return 'This field cannot be empty.';
-                            }
-                            return null;
-                          }
-
+    if (value != passwordTextController.text) {
+      return 'Passwords do not match';
+    }
+    if (value == null || value.isEmpty) {
+      return 'This field cannot be empty.';
+    }
+    return null;
+  }
 
   Future<void> signUp(BuildContext context,
       {required Function successCallback}) async {
