@@ -122,15 +122,7 @@ class SignUpState extends State<SignUpScreen> {
                             ),
                             controller: confirmPasswordTextController,
                             obscureText: true,
-                            validator: (value) {
-                              if (value != passwordTextController.text) {
-                                return 'Passwords do not match';
-                              }
-                              if (value == null || value.isEmpty) {
-                                return 'This field cannot be empty.';
-                              }
-                              return null;
-                            },
+                            validator: confirmPasswordValidator,
                           ),
                           const SizedBox(height: 16),
                         ],
@@ -170,6 +162,17 @@ class SignUpState extends State<SignUpScreen> {
     }
     return null;
   }
+
+  String? confirmPasswordValidator(value) {
+                            if (value != passwordTextController.text) {
+                              return 'Passwords do not match';
+                            }
+                            if (value == null || value.isEmpty) {
+                              return 'This field cannot be empty.';
+                            }
+                            return null;
+                          }
+
 
   Future<void> signUp(BuildContext context,
       {required Function successCallback}) async {
