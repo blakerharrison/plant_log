@@ -4,23 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
-import 'package:plant_log/upload_profile_photo/ui/upload_profile_photo_screen.dart';
+import 'package:plant_log/sign_up/ui/sign_up_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  final Function signUpSuccessCallback;
+class LoginScreen extends StatefulWidget {
+  final Function loginSuccessCallback;
 
-  const SignUpScreen({super.key, required this.signUpSuccessCallback});
+  const LoginScreen({super.key, required this.loginSuccessCallback});
 
   @override
-  State<StatefulWidget> createState() => SignUpState();
+  State<StatefulWidget> createState() => LoginState();
 }
 
-class SignUpState extends State<SignUpScreen> {
+class LoginState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final nameTextController = TextEditingController();
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
-  final confirmPasswordTextController = TextEditingController();
   bool loading = false;
 
   @override
@@ -30,7 +28,7 @@ class SignUpState extends State<SignUpScreen> {
         child: AbsorbPointer(
           absorbing: loading,
           child: Padding(
-            padding: const EdgeInsets.all(32.0),
+            padding: const EdgeInsets.only(left: 32.0, top: 32.0, right: 32.0),
             child: Stack(
               children: [
                 Form(
@@ -43,7 +41,7 @@ class SignUpState extends State<SignUpScreen> {
                         child: Row(
                           children: [
                             const Text(
-                              'Sign Up',
+                              'Sign In',
                               style: TextStyle(
                                 fontSize: 32.0,
                                 fontWeight: FontWeight.bold,
@@ -59,23 +57,6 @@ class SignUpState extends State<SignUpScreen> {
                             )
                           ],
                         ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Name',
-                              border: OutlineInputBorder(),
-                            ),
-                            controller: nameTextController,
-                            validator: (value) => _validator(
-                              value,
-                              formFileName: 'name',
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                        ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,21 +93,6 @@ class SignUpState extends State<SignUpScreen> {
                           const SizedBox(height: 16),
                         ],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Confirm Password',
-                              border: OutlineInputBorder(),
-                            ),
-                            controller: confirmPasswordTextController,
-                            obscureText: true,
-                            validator: confirmPasswordValidator,
-                          ),
-                          const SizedBox(height: 16),
-                        ],
-                      ),
                       const Spacer(),
                       SizedBox(
                         width: double.infinity,
@@ -137,10 +103,16 @@ class SignUpState extends State<SignUpScreen> {
                             backgroundColor: ThemeColors.secondaryButton,
                             elevation: 3,
                           ),
-                          onPressed: () => signUp(
+                          onPressed: () => signIn(
                             context,
-                            successCallback: widget.signUpSuccessCallback,
+                            successCallback: widget.loginSuccessCallback,
                           ),
+                          child: const Text('Login'),
+                        ),
+                      ),
+                      Center(
+                        child: TextButton(
+                          onPressed: () => navigateToSignUp(context),
                           child: const Text('Create Account'),
                         ),
                       ),
@@ -163,41 +135,45 @@ class SignUpState extends State<SignUpScreen> {
     return null;
   }
 
-  String? confirmPasswordValidator(value) {
-                            if (value != passwordTextController.text) {
-                              return 'Passwords do not match';
-                            }
-                            if (value == null || value.isEmpty) {
-                              return 'This field cannot be empty.';
-                            }
-                            return null;
-                          }
-
-
-  Future<void> signUp(BuildContext context,
+  Future<void> signIn(BuildContext context,
       {required Function successCallback}) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     setState(() => loading = true);
     try {
-      await authClient.signUp(
-        email: emailTextController.text,
-        password: passwordTextController.text,
-        displayName: nameTextController.text,
+      await authClient.signIn(
+        emailTextController.text,
+        passwordTextController.text,
+        signInError,
       );
       successCallback();
-      if (!context.mounted) return;
-      _navigateToUploadProfilePhotoScreen(context);
     } catch (e) {
-      log('❌ Error has occurred, please handle.');
+      log('❌ - Sign In Error Occurred: $e');
     }
     setState(() => loading = false);
   }
 
-  void _navigateToUploadProfilePhotoScreen(BuildContext context) async {
-    Route route = MaterialPageRoute(
-        builder: (context) => const UploadProfilePhotoScreen());
-    await Navigator.of(context).pushReplacement(route);
+  void signInError(FirebaseSignInErrorCode code) {
+    switch (code) {
+      case FirebaseSignInErrorCode.userNotFound:
+        log('🔥❌ - FirebaseSignInErrorCode: userNotFound');
+      case FirebaseSignInErrorCode.wrongPassword:
+        log('🔥❌ - FirebaseSignInErrorCode: wrongPassword');
+      case FirebaseSignInErrorCode.unknown:
+        log('🔥❌ - FirebaseSignInErrorCode: wrongPassword');
+    }
+  }
+
+  void navigateToSignUp(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => SignUpScreen(
+        signUpSuccessCallback: () {
+          // TODO: Push replacement to upload image screen.
+        },
+      ),
+      isScrollControlled: true,
+    );
   }
 }

@@ -5,7 +5,9 @@ import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/home/model/home_view_model.dart';
 import 'package:plant_log/home/state/home_state.dart';
 import 'package:plant_log/home/ui/home_presenter.dart';
+import 'package:plant_log/login/ui/login_screen.dart';
 import 'package:plant_log/login/ui/login_widget.dart';
+import 'package:plant_log/search/ui/plant_search_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   final HomePresenter presenter;
@@ -47,7 +49,7 @@ class HomeScreen extends ConsumerWidget {
           ],
         ),
         body: homeViewModel.showSearch
-            ? PlantSearchWidget(
+            ? PlantSearchScreen(
                 homeViewModel: homeViewModel,
                 presenter: presenter,
                 ref: ref,
@@ -82,9 +84,7 @@ class HomeScreen extends ConsumerWidget {
         floatingActionButton: homeViewModel.showLoginWidget
             ? null
             : FloatingActionButton(
-                onPressed: () => ref
-                    .read(homeViewModelProvider.notifier)
-                    .toggleLoginWidget(),
+                onPressed: () => navigateToLogin(context),
                 backgroundColor: Colors.green,
                 child: Icon(
                   (authClient.currentUser() == null) ? Icons.key : Icons.person,
@@ -93,39 +93,19 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
-}
 
-class PlantSearchWidget extends StatelessWidget {
-  const PlantSearchWidget({
-    super.key,
-    required this.homeViewModel,
-    required this.presenter,
-    required this.ref,
-  });
-
-  final HomeViewModel homeViewModel;
-  final HomePresenter presenter;
-  final WidgetRef ref;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SearchBar(
-              leading: const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Icon(Icons.search),
-              ),
-              hintText: 'Search Plants',
-              onChanged: ref.read(homeViewModelProvider.notifier).search,
-            ),
-          )
-        ],
+  void navigateToLogin(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => LoginScreen(
+        loginSuccessCallback: () => loginScreenCallback(context),
       ),
+      isScrollControlled: true,
     );
+  }
+
+  void loginScreenCallback(BuildContext context) {
+    Navigator.pop(context);
   }
 }
 
