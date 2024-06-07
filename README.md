@@ -1,5 +1,7 @@
 # Plant Log 🌺
 
+Note: In the very early stages.
+
 The Flutter project for Plant Log.
 
 ## Setup
