@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:plant_log/api/logger/logger.dart';
 import 'package:plant_log/api/perenual/api/perenual_api.dart';
 import 'package:plant_log/api/perenual/models/species_details_entity.dart';
+import 'package:plant_log/shared/ui/loading_indicator.dart';
 
 var selectedSpeciesId = Provider<int>((ref) {
   Logger.error('NO SPECIES ID');
@@ -37,7 +38,7 @@ class SpeciesDetailsView extends HookConsumerWidget {
         ),
       ),
       body: ref.watch(speciesDetailsEntityProvider(id)).when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: LoadingIndicator()),
         error: (err, stack) => Text('$err'),
         data: (speciesDetails) {
           return SingleChildScrollView(

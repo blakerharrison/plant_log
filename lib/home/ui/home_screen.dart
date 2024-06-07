@@ -30,7 +30,7 @@ class HomeScreen extends ConsumerWidget {
       }
     });
     return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      onTap: FocusManager.instance.primaryFocus?.unfocus,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -43,8 +43,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           actions: [
             IconButton(
-              onPressed: () =>
-                  ref.read(homeViewModelProvider.notifier).toggleSearch(),
+              onPressed: ref.read(homeViewModelProvider.notifier).toggleSearch,
               icon: Icon(homeViewModel.showSearch ? Icons.close : Icons.search),
             )
           ],
