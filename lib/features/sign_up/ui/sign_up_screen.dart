@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
+import 'package:plant_log/features/upload_profile_photo/ui/upload_profile_photo_screen.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
-import 'package:plant_log/upload_profile_photo/ui/upload_profile_photo_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   final Function signUpSuccessCallback;

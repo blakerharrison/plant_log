@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
+import 'package:plant_log/features/sign_up/ui/sign_up_screen.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
-import 'package:plant_log/sign_up/ui/sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function loginSuccessCallback;

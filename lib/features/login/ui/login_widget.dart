@@ -4,9 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:plant_log/api/firebase/auth/auth_client.dart';
+import 'package:plant_log/features/sign_up/ui/sign_up_screen.dart';
 import 'package:plant_log/shared/theme/theme_colors.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
-import 'package:plant_log/sign_up/ui/sign_up_screen.dart';
 
 class LoginWidget extends StatefulWidget {
   final Function closeButtonCallback;

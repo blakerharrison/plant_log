@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/api/perenual/api/perenual_api.dart';
 import 'package:plant_log/api/perenual/models/species_entity.dart';
-import 'package:plant_log/home/model/home_view_model.dart';
+import 'package:plant_log/features/home/model/home_view_model.dart';
 
 final homeViewModelProvider = StateNotifierProvider<HomeState, HomeViewModel>(
   (ref) => HomeState(),

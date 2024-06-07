@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plant_log/home/model/home_view_model.dart';
-import 'package:plant_log/home/state/home_state.dart';
-import 'package:plant_log/home/ui/home_presenter.dart';
+import 'package:plant_log/features/home/model/home_view_model.dart';
+import 'package:plant_log/features/home/state/home_state.dart';
+import 'package:plant_log/features/home/ui/home_presenter.dart';
 
 // TODO: Decouple this from HomeViewModel.
 class PlantSearchScreen extends StatelessWidget {
