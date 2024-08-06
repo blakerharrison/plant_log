@@ -37,7 +37,6 @@ class _PlantLogAppState extends State<PlantLogApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
           useMaterial3: true,
         ),
-        // home: HomeScreen(),
         home: HomeScreen(),
       ),
     );

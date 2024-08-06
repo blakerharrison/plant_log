@@ -9,7 +9,7 @@ part of 'species_details_entity.dart';
 SpeciesDetailsEntity _$SpeciesDetailsEntityFromJson(
         Map<String, dynamic> json) =>
     SpeciesDetailsEntity(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       commonName: json['common_name'] as String? ?? '',
       scientificName: (json['scientific_name'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -93,8 +93,8 @@ SpeciesDetailsEntity _$SpeciesDetailsEntityFromJson(
       growthRate: json['growth_rate'] as String? ?? '',
       maintenance: json['maintenance'] as String? ?? '',
       medicinal: json['medicinal'] as bool?,
-      poisonousToHumans: json['poisonous_to_humans'] as int?,
-      poisonousToPets: json['poisonous_to_pets'] as int?,
+      poisonousToHumans: (json['poisonous_to_humans'] as num?)?.toInt(),
+      poisonousToPets: (json['poisonous_to_pets'] as num?)?.toInt(),
       droughtTolerant: json['drought_tolerant'] as bool?,
       saltTolerant: json['salt_tolerant'] as bool?,
       thorny: json['thorny'] as bool?,
@@ -230,7 +230,7 @@ Map<String, dynamic> _$WateringGeneralBenchmarkToJson(
     };
 
 PruningCount _$PruningCountFromJson(Map<String, dynamic> json) => PruningCount(
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
       interval: json['interval'] as String? ?? '',
     );
 
@@ -263,8 +263,8 @@ Map<String, dynamic> _$HardinessLocationToJson(HardinessLocation instance) =>
     };
 
 DefaultImage _$DefaultImageFromJson(Map<String, dynamic> json) => DefaultImage(
-      imageID: json['image_id'] as int?,
-      license: json['license'] as int?,
+      imageID: (json['image_id'] as num?)?.toInt(),
+      license: (json['license'] as num?)?.toInt(),
       licenseName: json['license_name'] as String? ?? '',
       licenseUrl: json['license_url'] as String? ?? '',
       originalUrl: json['original_url'] as String? ?? '',

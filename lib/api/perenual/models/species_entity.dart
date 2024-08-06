@@ -47,8 +47,8 @@ class SpeciesDataEntity extends Equatable {
   @JsonKey(name: 'watering')
   final String watering;
 
-  @JsonKey(name: 'sunlight')
-  final List<String> sunlight;
+  // @JsonKey(name: 'sunlight')
+  // final List<String> sunlight;
 
   @JsonKey(name: 'default_image')
   final SpeciesDefaultImageEntity defaultImage;
@@ -60,7 +60,8 @@ class SpeciesDataEntity extends Equatable {
     List<String>? otherName,
     String? cycle,
     String? watering,
-    List<String>? sunlight,
+    // TODO: Getting parsing error
+    // List<String>? sunlight,
     SpeciesDefaultImageEntity? defaultImage,
   })  : id = id ?? -0,
         commonName = commonName ?? '',
@@ -68,7 +69,7 @@ class SpeciesDataEntity extends Equatable {
         otherName = otherName ?? [],
         cycle = cycle ?? '',
         watering = watering ?? '',
-        sunlight = sunlight ?? [],
+        // sunlight = sunlight ?? [],
         defaultImage = defaultImage ?? const SpeciesDefaultImageEntity();
 
   factory SpeciesDataEntity.fromJson(Map<String, dynamic> json) =>
@@ -84,7 +85,7 @@ class SpeciesDataEntity extends Equatable {
         otherName,
         cycle,
         watering,
-        sunlight,
+        // sunlight,
       ];
 }
 

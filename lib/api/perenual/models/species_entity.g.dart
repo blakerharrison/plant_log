@@ -22,7 +22,7 @@ Map<String, dynamic> _$SpeciesEntityToJson(SpeciesEntity instance) =>
 
 SpeciesDataEntity _$SpeciesDataEntityFromJson(Map<String, dynamic> json) =>
     SpeciesDataEntity(
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       commonName: json['common_name'] as String?,
       scientificName: (json['scientific_name'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -32,9 +32,6 @@ SpeciesDataEntity _$SpeciesDataEntityFromJson(Map<String, dynamic> json) =>
           .toList(),
       cycle: json['cycle'] as String?,
       watering: json['watering'] as String?,
-      sunlight: (json['sunlight'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
       defaultImage: json['default_image'] == null
           ? null
           : SpeciesDefaultImageEntity.fromJson(
@@ -49,14 +46,13 @@ Map<String, dynamic> _$SpeciesDataEntityToJson(SpeciesDataEntity instance) =>
       'other_name': instance.otherName,
       'cycle': instance.cycle,
       'watering': instance.watering,
-      'sunlight': instance.sunlight,
       'default_image': instance.defaultImage.toJson(),
     };
 
 SpeciesDefaultImageEntity _$SpeciesDefaultImageEntityFromJson(
         Map<String, dynamic> json) =>
     SpeciesDefaultImageEntity(
-      license: json['license'] as int?,
+      license: (json['license'] as num?)?.toInt(),
       licenseName: json['license_name'] as String?,
       licenseUrl: json['license_url'] as String?,
       originalUrl: json['original_url'] as String?,

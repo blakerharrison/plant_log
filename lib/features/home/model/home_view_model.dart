@@ -6,6 +6,7 @@ class HomeViewModel extends Equatable {
   final bool showSearch;
   final List<String> searchSuggestions;
   final bool showLoginWidget;
+  final SpeciesEntity searchResult;
 
   const HomeViewModel({
     this.speciesEntity = const SpeciesEntity(),
@@ -20,6 +21,7 @@ class HomeViewModel extends Equatable {
       'Bloodleaf',
     ],
     this.showLoginWidget = false,
+    this.searchResult = const SpeciesEntity(),
   });
 
   @override
@@ -28,5 +30,6 @@ class HomeViewModel extends Equatable {
         showSearch,
         searchSuggestions,
         showLoginWidget,
+        searchResult,
       ];
 }

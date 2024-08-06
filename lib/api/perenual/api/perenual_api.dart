@@ -19,11 +19,15 @@ class PerenualAPI {
     return apiKey;
   }
 
-  Future<SpeciesEntity> speciesList(int page) async {
-    Uri uri = Uri.https(_authority, _apiDirectory + _speciesListPath, {
+  Future<SpeciesEntity> speciesList(int page, {String search = ''}) async {
+    Map<String, dynamic> params = {
       'page': page.toString(),
       'key': _apiKey,
-    });
+    };
+    if (search.isNotEmpty) {
+      params['q'] = search;
+    }
+    Uri uri = Uri.https(_authority, _apiDirectory + _speciesListPath, params);
     http.Response response = await http.get(uri);
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body);

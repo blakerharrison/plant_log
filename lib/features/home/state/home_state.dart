@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/api/perenual/api/perenual_api.dart';
 import 'package:plant_log/api/perenual/models/species_entity.dart';
@@ -11,6 +12,7 @@ final homeViewModelProvider = StateNotifierProvider<HomeState, HomeViewModel>(
 
 class HomeState extends StateNotifier<HomeViewModel> {
   final PerenualAPI perenualAPI;
+  final Debouncer _debouncer = Debouncer();
   int page = 0;
   bool isLoading = false;
   bool showSearch = false;
@@ -50,8 +52,25 @@ class HomeState extends StateNotifier<HomeViewModel> {
   }
 
   void search(String query) {
-    // TODO: Only make network call after ever 1 second
-    log('SEARCH FOR: $query');
+    const duration = Duration(milliseconds: 500);
+    final q = query.replaceAll(" ", "_");
+    _debouncer.debounce(
+      duration: duration,
+      onDebounce: () async {
+        SpeciesEntity searchResult = await perenualAPI.speciesList(
+          1,
+          search: q,
+        );
+        state = HomeViewModel(
+          speciesEntity: state.speciesEntity,
+          showSearch: true,
+          showLoginWidget: false,
+          searchResult: SpeciesEntity(
+            data: searchResult.data,
+          ),
+        );
+      },
+    );
   }
 
   void toggleLoginWidget() {
