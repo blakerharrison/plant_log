@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/api/perenual/api/perenual_api.dart';
