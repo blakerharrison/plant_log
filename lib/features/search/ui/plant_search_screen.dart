@@ -19,22 +19,50 @@ class PlantSearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SearchBar(
-              leading: const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Icon(Icons.search),
+    return SafeArea(
+      child: Center(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SearchBar(
+                leading: const Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Icon(Icons.search),
+                ),
+                hintText: 'Search Plants',
+                onChanged: ref.read(homeViewModelProvider.notifier).search,
               ),
-              hintText: 'Search Plants',
-              onChanged: ref.read(homeViewModelProvider.notifier).search,
             ),
-          )
-        ],
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: List.generate(
+                    homeViewModel.searchResult.data.length,
+                    (index) => ListTile(
+                      title: Text(
+                        homeViewModel.searchResult.data[index].commonName,
+                      ),
+                      subtitle: Text(
+                        homeViewModel
+                            .searchResult.data[index].scientificName[0],
+                      ),
+                      onTap: () => _resultTap(
+                        context,
+                        id: homeViewModel.searchResult.data[index].id,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  _resultTap(BuildContext context, {required int id}) {
+    presenter.navigateToSpeciesDetails(context, id: id);
   }
 }
