@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:plant_log/api/firebase/auth/auth_client.dart';
 import 'package:plant_log/features/home/model/home_view_model.dart';
 import 'package:plant_log/features/home/state/home_state.dart';
 import 'package:plant_log/features/home/ui/home_presenter.dart';
 import 'package:plant_log/features/login/ui/login_screen.dart';
-import 'package:plant_log/features/login/ui/login_widget.dart';
 import 'package:plant_log/features/search/ui/plant_search_screen.dart';
 import 'package:plant_log/shared/ui/loading_indicator.dart';
 
