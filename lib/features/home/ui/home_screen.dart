@@ -62,34 +62,34 @@ class HomeScreen extends ConsumerWidget {
                     child: HomePlantListWidget(
                         homeViewModel: homeViewModel, presenter: presenter),
                   ),
-                  Center(
-                    child: Visibility(
-                      visible: homeViewModel.showLoginWidget,
-                      maintainAnimation: true,
-                      maintainState: true,
-                      child: AnimatedOpacity(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.fastOutSlowIn,
-                        opacity: homeViewModel.showLoginWidget ? 1 : 0,
-                        child: LoginWidget(
-                          closeButtonCallback: ref
-                              .read(homeViewModelProvider.notifier)
-                              .toggleLoginWidget,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Center(
+                  //   child: Visibility(
+                  //     visible: homeViewModel.showLoginWidget,
+                  //     maintainAnimation: true,
+                  //     maintainState: true,
+                  //     child: AnimatedOpacity(
+                  //       duration: const Duration(milliseconds: 500),
+                  //       curve: Curves.fastOutSlowIn,
+                  //       opacity: homeViewModel.showLoginWidget ? 1 : 0,
+                  //       child: LoginWidget(
+                  //         closeButtonCallback: ref
+                  //             .read(homeViewModelProvider.notifier)
+                  //             .toggleLoginWidget,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
-        floatingActionButton: homeViewModel.showLoginWidget
-            ? null
-            : FloatingActionButton(
-                onPressed: () => navigateToLogin(context, ref),
-                backgroundColor: Colors.green,
-                child: Icon(
-                  (authClient.currentUser() == null) ? Icons.key : Icons.person,
-                ),
-              ),
+        // floatingActionButton: homeViewModel.showLoginWidget
+        //     ? null
+        //     : FloatingActionButton(
+        //         onPressed: () => navigateToLogin(context, ref),
+        //         backgroundColor: Colors.green,
+        //         child: Icon(
+        //           (authClient.currentUser() == null) ? Icons.key : Icons.person,
+        //         ),
+        //       ),
       ),
     );
   }

@@ -50,13 +50,17 @@ class HomeState extends StateNotifier<HomeViewModel> {
   }
 
   void search(String query) {
+    if (query.isEmpty) { return; }
+    showSearchLoading();
     const duration = Duration(milliseconds: 500);
     final q = query.replaceAll(" ", "_");
+    const page = 1;
+
     _debouncer.debounce(
       duration: duration,
       onDebounce: () async {
         SpeciesEntity searchResult = await perenualAPI.speciesList(
-          1,
+          page,
           search: q,
         );
         state = HomeViewModel(
@@ -66,8 +70,19 @@ class HomeState extends StateNotifier<HomeViewModel> {
           searchResult: SpeciesEntity(
             data: searchResult.data,
           ),
+          searchIsLoading: false,
         );
       },
+    );
+  }
+
+  void showSearchLoading() {
+    state = HomeViewModel(
+      speciesEntity: state.speciesEntity,
+      showSearch: true,
+      showLoginWidget: false,
+      searchResult: state.searchResult,
+      searchIsLoading: true,
     );
   }
 
