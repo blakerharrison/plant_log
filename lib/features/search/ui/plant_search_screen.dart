@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_log/features/home/model/home_view_model.dart';
@@ -18,6 +19,7 @@ class PlantSearchScreen extends StatelessWidget {
   final HomeViewModel homeViewModel;
   final HomePresenter presenter;
   final WidgetRef ref;
+  final double _plantThumbnailDimension = 50;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +31,10 @@ class PlantSearchScreen extends StatelessWidget {
             const Expanded(
               child: LoadingIndicator(showBackground: false),
             ),
-          if (homeViewModel.searchResult.data.isEmpty && _textEditingController.text.isNotEmpty)
+          if (homeViewModel.searchResult.data.isEmpty &&
+              _textEditingController.text.isNotEmpty)
             const Expanded(
-              child:  Text('No Results Found'),
+              child: Text('No Results Found'),
             ),
           Center(
             child: Column(
@@ -52,18 +55,50 @@ class PlantSearchScreen extends StatelessWidget {
                     child: Column(
                       children: List.generate(
                         homeViewModel.searchResult.data.length,
-                        (index) => ListTile(
-                          title: Text(
-                            homeViewModel.searchResult.data[index].commonName,
-                          ),
-                          subtitle: Text(
-                            homeViewModel
-                                .searchResult.data[index].scientificName[0],
-                          ),
-                          onTap: () => _resultTap(
-                            context,
-                            id: homeViewModel.searchResult.data[index].id,
-                          ),
+                        (index) => Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50.0),
+                                child: CachedNetworkImage(
+                                  imageUrl: homeViewModel.searchResult.data[index]
+                                      .defaultImage.thumbnail,
+                                  height: _plantThumbnailDimension,
+                                  width: _plantThumbnailDimension,
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) => Center(
+                                    child: SizedBox(
+                                      height: _plantThumbnailDimension,
+                                      width: _plantThumbnailDimension,
+                                      child: CircularProgressIndicator(
+                                        value: downloadProgress.progress,
+                                      ),
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                title: Text(
+                                  homeViewModel
+                                      .searchResult.data[index].commonName,
+                                ),
+                                subtitle: Text(
+                                  homeViewModel
+                                      .searchResult.data[index].scientificName[0],
+                                ),
+                                onTap: () => _resultTap(
+                                  context,
+                                  id: homeViewModel.searchResult.data[index].id,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
