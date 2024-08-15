@@ -10,7 +10,7 @@ class HomePresenter {
           overrides: [
             selectedSpeciesId.overrideWithValue(id),
           ],
-          child: const SpeciesDetailsView(),
+          child: SpeciesDetailsView(),
         ),
       ),
     );

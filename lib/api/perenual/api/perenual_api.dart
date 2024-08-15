@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:plant_log/api/logger/logger.dart';
 import 'package:plant_log/api/perenual/models/species_details_entity.dart';
 import 'package:plant_log/api/perenual/models/species_entity.dart';
+
+final perenualAPIServiceProvider =
+    Provider<PerenualAPI>((ref) => PerenualAPI());
 
 class PerenualAPI {
   final String _authority = 'perenual.com';
